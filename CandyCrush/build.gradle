@@ -5,6 +5,12 @@ plugins {
 group = 'be.kuleuven'
 version = '1.0-SNAPSHOT'
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'be.kuleuven.Main'
+    }
+}
+
 repositories {
     mavenCentral()
 }
