@@ -64,10 +64,14 @@ public class View extends Application {
 
         updateNameLabel();
 
+        //Create controller instance
+        Controller controller = new Controller();
+        controller.RandomizeGrid();
+
         stage.show();
     }
 
-    private void updateNameLabel() {
+    public void updateNameLabel() {
         //Update label in game window to player name
         NameLabel.setText(PlayerName);
     }
