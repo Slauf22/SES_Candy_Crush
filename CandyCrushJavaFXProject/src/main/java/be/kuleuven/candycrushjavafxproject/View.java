@@ -26,6 +26,7 @@ public class View extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Create start window
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("MainScreen.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 632, 435);
@@ -37,25 +38,38 @@ public class View extends Application {
     }
 
     public void StartButtonHandle(ActionEvent event) throws IOException {
+        //Handle start button if there is text
         if (!Objects.equals(NameTextBox.getText(), ""))
         {
+            //Read name
             PlayerName = NameTextBox.getText();
 
+            //Read stage, otherwise its null
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 
+            //Create game window
             CreateWindow();;
         }
     }
 
     public void CreateWindow() throws IOException {
+        //Loads new FXML thats the game window
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("GameScreen.fxml"));
+        fxmlLoader.setController(this); // Set controller to current instance
 
         Scene scene = new Scene(fxmlLoader.load(), 632, 435);
 
         stage.setScene(scene);
         stage.setResizable(false);
 
+        updateNameLabel();
+
         stage.show();
+    }
+
+    private void updateNameLabel() {
+        //Update label in game window to player name
+        NameLabel.setText(PlayerName);
     }
 
     public static void main(String[] args) {
