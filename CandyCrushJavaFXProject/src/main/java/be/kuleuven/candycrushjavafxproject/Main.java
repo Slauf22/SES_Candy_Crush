@@ -1,6 +1,7 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,11 +15,11 @@ import java.util.Objects;
 import java.util.jar.Attributes;
 
 public class Main extends Application {
+    @FXML
     public Button StartButton;
+    @FXML
     public TextField NameTextBox;
     private String PlayerName;
-
-    private Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,19 +27,22 @@ public class Main extends Application {
 
         Scene scene = new Scene(fxmlLoader.load(), 632, 435);
 
-        this.stage = stage;
-
-        this.stage.setScene(scene);
-        this.stage.setResizable(false);
-
-        this.stage.show();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("test");
+        stage.show();
     }
 
-    public void StartButtonHandle() throws IOException {
+    public void StartButtonHandle(ActionEvent event) throws IOException {
         if (!Objects.equals(NameTextBox.getText(), ""))
         {
             PlayerName = NameTextBox.getText();
         }
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+        CandyCrushGameWindow gameWindow = new CandyCrushGameWindow(stage);
+        gameWindow.CreateWindow();
     }
 
     public static void main(String[] args) {

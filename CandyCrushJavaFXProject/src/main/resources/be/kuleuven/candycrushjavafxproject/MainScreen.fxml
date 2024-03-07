@@ -16,5 +16,5 @@
       </font>
    </Label>
    <TextField fx:id="NameTextBox" layoutX="307.0" layoutY="231.0" />
-   <Button fx:id="StartButton" layoutX="258.0" layoutY="336.0" mnemonicParsing="false" onAction="#StartButtonHandle" prefHeight="26.0" prefWidth="114.0" text="Start" />
+   <Button fx:id="StartButton" layoutX="258.0" layoutY="336.0" mnemonicParsing="false" onAction="#StartButtonHandle" prefHeight="26.0" prefWidth="114.0" text="Start"/>
 </AnchorPane>
