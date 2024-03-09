@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="435.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.candycrushjavafxproject.View">
+<AnchorPane prefHeight="435.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.candycrushjavafxproject.Controller">
    <Label layoutX="180.0" layoutY="20.0" prefHeight="38.0" prefWidth="290.0" text="Welcome to Candy Crush" textAlignment="CENTER">
       <font>
          <Font size="25.0" />
