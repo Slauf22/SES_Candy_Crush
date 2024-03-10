@@ -1,11 +1,8 @@
 package be.kuleuven.candycrushjavafxproject;
 
-import be.kuleuven.CheckNeighboursInGrid;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,7 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 public class Controller extends Application {
@@ -78,22 +74,22 @@ public class Controller extends Application {
     public void CreateWindow() throws IOException {
         view.CreateGameWindow(stage, this);
 
-        updateNameLabel();
-        loadGridLabelIds();
+        UpdateNameLabel();
+        LoadGridLabelIds();
 
         model.RandomizeGrid(LabelGridList);
 
         stage.show();
     }
 
-    public void loadGridLabelIds() {
+    public void LoadGridLabelIds() {
         LabelGridList.add(lbl1x1); LabelGridList.add(lbl1x2); LabelGridList.add(lbl1x3); LabelGridList.add(lbl1x4);
         LabelGridList.add(lbl2x1); LabelGridList.add(lbl2x2); LabelGridList.add(lbl2x3); LabelGridList.add(lbl2x4);
         LabelGridList.add(lbl3x1); LabelGridList.add(lbl3x2); LabelGridList.add(lbl3x3); LabelGridList.add(lbl3x4);
         LabelGridList.add(lbl4x1); LabelGridList.add(lbl4x2); LabelGridList.add(lbl4x3); LabelGridList.add(lbl4x4);
     }
 
-    public void updateNameLabel() {
+    public void UpdateNameLabel() {
         //Update label in game window to player name
         NameLabel.setText(model.getPlayerName());
     }
@@ -120,7 +116,7 @@ public class Controller extends Application {
         model.RandomizeGrid(LabelGridList);
     }
 
-    public void handleLabelClick(MouseEvent event) {
+    public void HandleLabelClick(MouseEvent event) {
         ArrayList<Integer> gridValues = new ArrayList<>();
 
         //Put the integer values of the grid labels into a integer list to send to checkneighbours function
@@ -132,5 +128,9 @@ public class Controller extends Application {
         model.CombinationMadeHandler(gridValues, event);
 
         ScoreLbl.setText("Score: " + model.getUserScore());
+    }
+
+    public void RestartButtonHandler() throws IOException {
+        view.CreateLoginWindow(stage);
     }
 }
