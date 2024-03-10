@@ -31,11 +31,15 @@ public class Controller extends Application {
                     lbl4x1, lbl4x2, lbl4x3, lbl4x4;
     @FXML
     public ArrayList<Label> LabelGridList = new ArrayList<>();
-    public String PlayerName;
     private Stage stage;
     private Model model;
     private final int width = 4;
     private final int height = 4;
+
+    public Controller()
+    {
+        model = new Model();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -49,11 +53,45 @@ public class Controller extends Application {
         stage.show();
     }
 
+    public void CreateWindow() throws IOException {
+        //Loads new FXML thats the game window
+        FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("GameScreen.fxml"));
+        fxmlLoader.setController(this);
+
+        Scene scene = new Scene(fxmlLoader.load(), 632, 435);
+
+        stage.setScene(scene);
+        stage.setResizable(false);
+
+        updateNameLabel();
+        loadGridLabelIds();
+
+        model.RandomizeGrid(LabelGridList,width*height);
+
+        stage.show();
+    }
+
+    public void loadGridLabelIds() {
+        LabelGridList.add(lbl1x1); LabelGridList.add(lbl1x2); LabelGridList.add(lbl1x3); LabelGridList.add(lbl1x4);
+        LabelGridList.add(lbl2x1); LabelGridList.add(lbl2x2); LabelGridList.add(lbl2x3); LabelGridList.add(lbl2x4);
+        LabelGridList.add(lbl3x1); LabelGridList.add(lbl3x2); LabelGridList.add(lbl3x3); LabelGridList.add(lbl3x4);
+        LabelGridList.add(lbl4x1); LabelGridList.add(lbl4x2); LabelGridList.add(lbl4x3); LabelGridList.add(lbl4x4);
+    }
+
+    public void updateNameLabel() {
+        //Update label in game window to player name
+        NameLabel.setText(model.getPlayerName());
+    }
+
+    //////////////////
+    //HANDLERS BELOW//
+    //////////////////
+
     public void StartButtonHandle(ActionEvent event) throws IOException {
         if (!Objects.equals(NameTextBox.getText(), ""))
         {
             //Read name
-            PlayerName = NameTextBox.getText();
+            model.setPlayerName(NameTextBox.getText());
 
             //Read stage, otherwise its null
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -77,39 +115,7 @@ public class Controller extends Application {
             gridValues.add(intValue);
         }
 
-        model = new Model();
         model.CombinationMadeHandler(gridValues,event,height,width);
-    }
-
-    public void CreateWindow() throws IOException {
-        //Loads new FXML thats the game window
-        FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("GameScreen.fxml"));
-        fxmlLoader.setController(this);
-
-        Scene scene = new Scene(fxmlLoader.load(), 632, 435);
-
-        stage.setScene(scene);
-        stage.setResizable(false);
-
-        updateNameLabel();
-        loadGridLabelIds();
-
-        model = new Model();
-        model.RandomizeGrid(LabelGridList,width*height);
-
-        stage.show();
-    }
-
-    public void loadGridLabelIds() {
-        LabelGridList.add(lbl1x1); LabelGridList.add(lbl1x2); LabelGridList.add(lbl1x3); LabelGridList.add(lbl1x4);
-        LabelGridList.add(lbl2x1); LabelGridList.add(lbl2x2); LabelGridList.add(lbl2x3); LabelGridList.add(lbl2x4);
-        LabelGridList.add(lbl3x1); LabelGridList.add(lbl3x2); LabelGridList.add(lbl3x3); LabelGridList.add(lbl3x4);
-        LabelGridList.add(lbl4x1); LabelGridList.add(lbl4x2); LabelGridList.add(lbl4x3); LabelGridList.add(lbl4x4);
-    }
-
-    public void updateNameLabel() {
-        //Update label in game window to player name
-        NameLabel.setText(PlayerName);
     }
 
     public static void main(String[] args) {

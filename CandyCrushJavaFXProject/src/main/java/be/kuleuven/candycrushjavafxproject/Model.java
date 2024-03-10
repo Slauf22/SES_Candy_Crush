@@ -8,6 +8,40 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Model {
+
+    ////////////////////
+    //Member variables//
+    ////////////////////
+
+    private int userScore;
+
+    private String PlayerName;
+
+    ///////////////////////
+    //Getters and Setters//
+    ///////////////////////
+
+    public int getUserScore() {
+        return userScore;
+    }
+
+    public void setUserScore(int userScore) {
+        this.userScore = userScore;
+    }
+
+    public String getPlayerName() {
+        return PlayerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        PlayerName = playerName;
+    }
+
+    ////////////////////
+    //Member Functions//
+    ////////////////////
+
+    //Function randomized the grid
     public void RandomizeGrid(ArrayList<Label> labelGridList,int nElements)
     {
         Random random = new Random();
@@ -18,6 +52,7 @@ public class Model {
         }
     }
 
+    //Function handles when a user clicks on a number on the grid.
     public void CombinationMadeHandler(ArrayList<Integer> gridValues, MouseEvent event, int gridHeight, int gridWidth)
     {
         CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
