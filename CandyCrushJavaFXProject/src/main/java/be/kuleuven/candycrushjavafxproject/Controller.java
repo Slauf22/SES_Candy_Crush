@@ -38,6 +38,7 @@ public class Controller extends Application {
     public ArrayList<Label> LabelGridList = new ArrayList<>();
     private Stage stage;
     private Model model;
+    private View view;
 
     ///////////////
     //Constructor//
@@ -46,6 +47,7 @@ public class Controller extends Application {
     public Controller()
     {
         model = new Model();
+        view = new View();
     }
 
     ////////////////////
@@ -54,14 +56,7 @@ public class Controller extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Create start window
-        FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("MainScreen.fxml"));
-
-        Scene scene = new Scene(fxmlLoader.load(), 632, 435);
-
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        view.CreateLoginWindow(stage);
     }
 
     public static void main(String[] args) {
@@ -73,13 +68,7 @@ public class Controller extends Application {
     ////////////////////
 
     public void CreateWindow() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("GameScreen.fxml"));
-        fxmlLoader.setController(this);
-
-        Scene scene = new Scene(fxmlLoader.load(), 632, 435);
-
-        stage.setScene(scene);
-        stage.setResizable(false);
+        view.CreateGameWindow(stage, this);
 
         updateNameLabel();
         loadGridLabelIds();
