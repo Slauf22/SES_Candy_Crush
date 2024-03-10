@@ -13,7 +13,7 @@ public class Model {
     //Member variables//
     ////////////////////
 
-    private int userScore;
+    private int userScore = 0;
     private String PlayerName;
     private final int width = 4;
     private final int height = 4;
@@ -79,6 +79,9 @@ public class Model {
             neighboursGridPositionsArray.add(r + "x" + c);
         }
 
-        System.out.println(neighboursGridPositionsArray);
+        if (!neighboursGridPositionsArray.isEmpty())
+        {
+            userScore += neighboursGridPositionsArray.size() + 1;
+        }
     }
 }

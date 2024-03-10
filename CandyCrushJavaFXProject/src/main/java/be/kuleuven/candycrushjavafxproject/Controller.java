@@ -37,6 +37,9 @@ public class Controller extends Application {
     @FXML
     public ArrayList<Label> LabelGridList = new ArrayList<>();
 
+    @FXML
+    public Label ScoreLbl;
+
     ////////////////////
     //Member Variables//
     ////////////////////
@@ -114,7 +117,6 @@ public class Controller extends Application {
     }
 
     public void RandomizeButtonHandler(ActionEvent event) throws IOException{
-        model = new Model();
         model.RandomizeGrid(LabelGridList);
     }
 
@@ -128,5 +130,7 @@ public class Controller extends Application {
         }
 
         model.CombinationMadeHandler(gridValues, event);
+
+        ScoreLbl.setText("Score: " + model.getUserScore());
     }
 }
