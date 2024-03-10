@@ -9,7 +9,7 @@ public class Main {
         //Variables
         int gridWidth = 4;
         int gridHeight = 4;
-        int indexToCheck = 5;
+        int indexToCheck = 15;
 
         //Initialize grid
         ArrayList<Integer> grid = new ArrayList<>(Arrays.asList(

@@ -1,5 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
+import be.kuleuven.CheckNeighboursInGrid;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,10 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Controller extends Application {
@@ -31,6 +34,8 @@ public class Controller extends Application {
     public String PlayerName;
     private Stage stage;
     private Model model;
+    private final int width = 4;
+    private final int height = 4;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -54,13 +59,39 @@ public class Controller extends Application {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 
             //Create game window
-            CreateWindow();;
+            CreateWindow();
         }
     }
 
     public void RandomizeButtonHandler(ActionEvent event) throws IOException{
         model = new Model();
-        model.RandomizeGrid(LabelGridList,4*4);
+        model.RandomizeGrid(LabelGridList,height*width);
+    }
+
+    public void handleLabelClick(MouseEvent event) {
+        ArrayList<Integer> gridValues = new ArrayList<>();
+
+        //Put the integer values of the grid labels into a integer list to send to checkneighbours function
+        for (Label label : LabelGridList) {
+            int intValue = Integer.parseInt(label.getText());
+            gridValues.add(intValue);
+        }
+
+        CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
+
+        Label labelClicked = (Label) event.getSource();
+
+        //The id mentions the grid position: lblRxC
+        String gridPosition = labelClicked.getId().substring(3);
+        int row = Integer.parseInt(gridPosition.substring(0,1));
+        int col = Integer.parseInt(gridPosition.substring(2,3));
+
+        //Get index from known row and cols. Function needs index from 0 to 15;
+        int index = (row - 1) * 4 + (col - 1);
+
+        Iterable <Integer> neighboursIndexes = checkNeighboursInGrid.getSameNeighboursIds(gridValues,width,height,index);
+
+        System.out.println(neighboursIndexes);
     }
 
     public void CreateWindow() throws IOException {
@@ -77,7 +108,7 @@ public class Controller extends Application {
         loadGridLabelIds();
 
         model = new Model();
-        model.RandomizeGrid(LabelGridList,4*4);
+        model.RandomizeGrid(LabelGridList,width*height);
 
         stage.show();
     }
