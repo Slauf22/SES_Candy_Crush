@@ -117,15 +117,8 @@ public class Controller extends Application {
     }
 
     public void HandleLabelClick(MouseEvent event) {
-        ArrayList<Integer> gridValues = new ArrayList<>();
 
-        //Put the integer values of the grid labels into a integer list to send to checkneighbours function
-        for (Label label : LabelGridList) {
-            int intValue = Integer.parseInt(label.getText());
-            gridValues.add(intValue);
-        }
-
-        model.CombinationMadeHandler(gridValues, event);
+        model.CombinationMadeHandler(LabelGridList, event);
 
         ScoreLbl.setText("Score: " + model.getUserScore());
     }
