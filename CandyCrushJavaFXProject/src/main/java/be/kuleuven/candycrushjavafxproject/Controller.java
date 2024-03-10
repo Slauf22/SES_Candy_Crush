@@ -18,6 +18,11 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class Controller extends Application {
+
+    ////////////////////
+    //Member variables//
+    ////////////////////
+
     @FXML
     public Button StartButton;
     @FXML
@@ -33,13 +38,19 @@ public class Controller extends Application {
     public ArrayList<Label> LabelGridList = new ArrayList<>();
     private Stage stage;
     private Model model;
-    private final int width = 4;
-    private final int height = 4;
+
+    ///////////////
+    //Constructor//
+    ///////////////
 
     public Controller()
     {
         model = new Model();
     }
+
+    ////////////////////
+    //JavaFX Functions//
+    ////////////////////
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -53,8 +64,15 @@ public class Controller extends Application {
         stage.show();
     }
 
+    public static void main(String[] args) {
+        launch();
+    }
+
+    ////////////////////
+    //Member Functions//
+    ////////////////////
+
     public void CreateWindow() throws IOException {
-        //Loads new FXML thats the game window
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("GameScreen.fxml"));
         fxmlLoader.setController(this);
 
@@ -66,7 +84,7 @@ public class Controller extends Application {
         updateNameLabel();
         loadGridLabelIds();
 
-        model.RandomizeGrid(LabelGridList,width*height);
+        model.RandomizeGrid(LabelGridList);
 
         stage.show();
     }
@@ -84,7 +102,7 @@ public class Controller extends Application {
     }
 
     //////////////////
-    //HANDLERS BELOW//
+    //Event Handlers//
     //////////////////
 
     public void StartButtonHandle(ActionEvent event) throws IOException {
@@ -103,7 +121,7 @@ public class Controller extends Application {
 
     public void RandomizeButtonHandler(ActionEvent event) throws IOException{
         model = new Model();
-        model.RandomizeGrid(LabelGridList,height*width);
+        model.RandomizeGrid(LabelGridList);
     }
 
     public void handleLabelClick(MouseEvent event) {
@@ -115,10 +133,6 @@ public class Controller extends Application {
             gridValues.add(intValue);
         }
 
-        model.CombinationMadeHandler(gridValues,event,height,width);
-    }
-
-    public static void main(String[] args) {
-        launch();
+        model.CombinationMadeHandler(gridValues, event);
     }
 }
