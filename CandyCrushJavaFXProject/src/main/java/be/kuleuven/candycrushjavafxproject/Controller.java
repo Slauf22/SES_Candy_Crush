@@ -77,21 +77,8 @@ public class Controller extends Application {
             gridValues.add(intValue);
         }
 
-        CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
-
-        Label labelClicked = (Label) event.getSource();
-
-        //The id mentions the grid position: lblRxC
-        String gridPosition = labelClicked.getId().substring(3);
-        int row = Integer.parseInt(gridPosition.substring(0,1));
-        int col = Integer.parseInt(gridPosition.substring(2,3));
-
-        //Get index from known row and cols. Function needs index from 0 to 15;
-        int index = (row - 1) * 4 + (col - 1);
-
-        Iterable <Integer> neighboursIndexes = checkNeighboursInGrid.getSameNeighboursIds(gridValues,width,height,index);
-
-        System.out.println(neighboursIndexes);
+        model = new Model();
+        model.CombinationMadeHandler(gridValues,event,height,width);
     }
 
     public void CreateWindow() throws IOException {
