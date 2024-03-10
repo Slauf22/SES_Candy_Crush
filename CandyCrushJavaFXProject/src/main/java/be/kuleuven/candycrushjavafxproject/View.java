@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class View{
+
+    ////////////////////
+    //Member Functions//
+    ////////////////////
+
     public void CreateLoginWindow(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Controller.class.getResource("MainScreen.fxml"));
 

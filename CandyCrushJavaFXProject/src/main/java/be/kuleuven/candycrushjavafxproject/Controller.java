@@ -19,9 +19,9 @@ import java.util.Objects;
 
 public class Controller extends Application {
 
-    ////////////////////
-    //Member variables//
-    ////////////////////
+    /////////////////////////
+    //FXML Widget Variables//
+    /////////////////////////
 
     @FXML
     public Button StartButton;
@@ -36,6 +36,11 @@ public class Controller extends Application {
                     lbl4x1, lbl4x2, lbl4x3, lbl4x4;
     @FXML
     public ArrayList<Label> LabelGridList = new ArrayList<>();
+
+    ////////////////////
+    //Member Variables//
+    ////////////////////
+
     private Stage stage;
     private Model model;
     private View view;
