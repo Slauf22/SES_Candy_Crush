@@ -10,7 +10,7 @@
          <Font size="23.0" />
       </font>
    </Label>
-   <Label fx:id="NameLabel" layoutX="250.0" layoutY="70.0" prefHeight="21.0" prefWidth="99.0" text="Player Name Here" textAlignment="CENTER" />
+   <Label fx:id="NameLabel" contentDisplay="CENTER" layoutX="250.0" layoutY="70.0" prefHeight="21.0" prefWidth="99.0" text="Player Name Here" textAlignment="CENTER" />
    <Label fx:id="lbl1x1" layoutX="232.0" layoutY="170.0" prefHeight="22.0" prefWidth="7.0" text="8" textAlignment="CENTER" />
    <Label fx:id="lbl1x2" layoutX="279.0" layoutY="173.0" text="8" />
    <Label fx:id="lbl1x3" layoutX="318.0" layoutY="173.0" text="8" />
@@ -27,4 +27,11 @@
    <Label fx:id="lbl4x2" layoutX="279.0" layoutY="295.0" text="8" />
    <Label fx:id="lbl4x3" layoutX="318.0" layoutY="295.0" text="8" />
    <Label fx:id="lbl4x4" layoutX="360.0" layoutY="295.0" text="8" />
+   <Button fx:id="RandomizeButton" layoutX="64.0" layoutY="187.0" mnemonicParsing="false" text="Randomize Grid" onAction="#RandomizeButtonHandler"/>
+   <Button fx:id="RestartButton" layoutX="87.0" layoutY="273.0" mnemonicParsing="false" text="Restart" />
+   <Label fx:id="ScoreLbl" layoutX="414.0" layoutY="213.0" text="Score: ">
+      <font>
+         <Font size="33.0" />
+      </font>
+   </Label>
 </AnchorPane>

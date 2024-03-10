@@ -27,7 +27,7 @@ public class Controller extends Application {
                     lbl3x1, lbl3x2, lbl3x3, lbl3x4,
                     lbl4x1, lbl4x2, lbl4x3, lbl4x4;
     @FXML
-    public ArrayList<Label> labelGridList = new ArrayList<>();
+    public ArrayList<Label> LabelGridList = new ArrayList<>();
     public String PlayerName;
     private Stage stage;
     private Model model;
@@ -41,12 +41,10 @@ public class Controller extends Application {
 
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("test");
         stage.show();
     }
 
     public void StartButtonHandle(ActionEvent event) throws IOException {
-        //Handle start button if there is text
         if (!Objects.equals(NameTextBox.getText(), ""))
         {
             //Read name
@@ -58,6 +56,11 @@ public class Controller extends Application {
             //Create game window
             CreateWindow();;
         }
+    }
+
+    public void RandomizeButtonHandler(ActionEvent event) throws IOException{
+        model = new Model();
+        model.RandomizeGrid(LabelGridList,4*4);
     }
 
     public void CreateWindow() throws IOException {
@@ -74,16 +77,16 @@ public class Controller extends Application {
         loadGridLabelIds();
 
         model = new Model();
-        model.RandomizeGrid(labelGridList,4*4);
+        model.RandomizeGrid(LabelGridList,4*4);
 
         stage.show();
     }
 
     public void loadGridLabelIds() {
-        labelGridList.add(lbl1x1); labelGridList.add(lbl1x2); labelGridList.add(lbl1x3); labelGridList.add(lbl1x4);
-        labelGridList.add(lbl2x1); labelGridList.add(lbl2x2); labelGridList.add(lbl2x3); labelGridList.add(lbl2x4);
-        labelGridList.add(lbl3x1); labelGridList.add(lbl3x2); labelGridList.add(lbl3x3); labelGridList.add(lbl3x4);
-        labelGridList.add(lbl4x1); labelGridList.add(lbl4x2); labelGridList.add(lbl4x3); labelGridList.add(lbl4x4);
+        LabelGridList.add(lbl1x1); LabelGridList.add(lbl1x2); LabelGridList.add(lbl1x3); LabelGridList.add(lbl1x4);
+        LabelGridList.add(lbl2x1); LabelGridList.add(lbl2x2); LabelGridList.add(lbl2x3); LabelGridList.add(lbl2x4);
+        LabelGridList.add(lbl3x1); LabelGridList.add(lbl3x2); LabelGridList.add(lbl3x3); LabelGridList.add(lbl3x4);
+        LabelGridList.add(lbl4x1); LabelGridList.add(lbl4x2); LabelGridList.add(lbl4x3); LabelGridList.add(lbl4x4);
     }
 
     public void updateNameLabel() {
