@@ -50,7 +50,7 @@ public class Controller extends Application {
 
     public Controller()
     {
-        model = new Model();
+        model = new Model(4,4);
         view = new View();
     }
 

@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 public class Model {
@@ -16,8 +15,17 @@ public class Model {
 
     private int userScore = 0;
     private String PlayerName;
-    private final int width = 4;
-    private final int height = 4;
+    private int width = 4;
+    private int height = 4;
+
+    ///////////////
+    //Constructor//
+    ///////////////
+
+    public Model(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 
     ///////////////////////
     //Getters and Setters//
@@ -25,10 +33,6 @@ public class Model {
 
     public int getUserScore() {
         return userScore;
-    }
-
-    public void setUserScore(int userScore) {
-        this.userScore = userScore;
     }
 
     public String getPlayerName() {
@@ -101,7 +105,7 @@ public class Model {
             //Set clicked to random
             labelClicked.setText(Integer.toString(GenerateRandomNumber()));
 
-            userScore += neighboursGridPositionsArray.size() + 1;
+            IncreaseScore(neighboursGridPositionsArray.size() + 1);
         }
     }
 
@@ -109,5 +113,9 @@ public class Model {
         Random random = new Random();
 
         return random.nextInt(5) + 1;
+    }
+
+    public void IncreaseScore(int value) {
+        userScore += value;
     }
 }
