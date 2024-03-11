@@ -77,4 +77,13 @@ public class ModelTest {
                 (number4 >= 1 && number4 <= 5) &&
                 (number5 >= 1 && number5 <= 5));
     }
+
+    @Test
+    public void SetNameTest(){
+        Model model = new Model(4,4);
+
+        model.setPlayerName("Rauf");
+
+        assertEquals(model.getPlayerName(),"Rauf");
+    }
 }
