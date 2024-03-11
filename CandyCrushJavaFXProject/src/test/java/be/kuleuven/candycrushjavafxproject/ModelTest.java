@@ -1,5 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
+import org.controlsfx.control.PropertySheet;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -54,9 +55,26 @@ public class ModelTest {
     }
 
     @Test
-    public void modelContructorSetHeightWidthTest(){
+    public void ModelContructorSetHeightWidthTest(){
         Model model = new Model(4,4);
 
         assert(model.getHeight() == 4 && model.getWidth() == 4);
+    }
+
+    @Test
+    public void GenerateRandomNumberFunctionAbove1Below5Test(){
+        Model model = new Model(4,4);
+
+        int number1 = model.GenerateRandomNumber();
+        int number2 = model.GenerateRandomNumber();
+        int number3 = model.GenerateRandomNumber();
+        int number4 = model.GenerateRandomNumber();
+        int number5 = model.GenerateRandomNumber();
+
+        assert ((number1 >= 1 && number1 <= 5) &&
+                (number2 >= 1 && number2 <= 5) &&
+                (number3 >= 1 && number3 <= 5) &&
+                (number4 >= 1 && number4 <= 5) &&
+                (number5 >= 1 && number5 <= 5));
     }
 }
