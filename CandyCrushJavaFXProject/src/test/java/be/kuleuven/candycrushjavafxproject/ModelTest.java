@@ -1,9 +1,7 @@
 package be.kuleuven.candycrushjavafxproject;
 
-import org.controlsfx.control.PropertySheet;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.Objects;
 import javafx.scene.control.Label;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,37 +19,30 @@ public class ModelTest {
 
     @Test
     public void RandomizeTwoGridsTest(){
-        Model model = new Model(4,4);
+        Model model = new Model(2,2);
 
-        ArrayList<Label> labelArrayList1 = new ArrayList<>();
+        ArrayList<Label> labelArrayListOriginal = new ArrayList<>();
 
-        //Initialize a lbl array all with text 0
-        for (int i = 0; i < 16; i++)
-        {
-            Label lbl = new Label();
-            lbl.setText("0");
-            labelArrayList1.add(lbl);
-        }
+        Label lbl1 = new Label();
+        Label lbl2 = new Label();
+        Label lbl3 = new Label();
+        Label lbl4 = new Label();
 
-        //Copy to second arraylist
-        ArrayList<Label> labelArrayList2;
-        labelArrayList2 = labelArrayList1;
+        lbl1.setText("8");
+        lbl2.setText("8");
+        lbl3.setText("8");
+        lbl4.setText("8");
 
-        //Randomize both and check if they are different
-        model.RandomizeGrid(labelArrayList1);
-        model.RandomizeGrid(labelArrayList2);
+        labelArrayListOriginal.add(lbl1);
+        labelArrayListOriginal.add(lbl2);
+        labelArrayListOriginal.add(lbl3);
+        labelArrayListOriginal.add(lbl4);
 
-        int counter = 0;
+        ArrayList<Label> labelArrayListRandomized = new ArrayList<>(labelArrayListOriginal);
 
-        for (int i = 0; i < 16; i++)
-        {
-            if (Objects.equals(labelArrayList2.get(i).getText(), labelArrayList1.get(i).getText()))
-            {
-                counter++;
-            }
-        }
+        model.RandomizeGrid(labelArrayListRandomized);
 
-        assert(counter < 16);
+        assert(!(labelArrayListOriginal.equals(labelArrayListRandomized)));
     }
 
     @Test
