@@ -16,6 +16,7 @@ public class Model {
     private int userScore = 0;
     private String PlayerName;
     private int width = 4;
+
     private int height = 4;
 
     ///////////////
@@ -30,6 +31,14 @@ public class Model {
     ///////////////////////
     //Getters and Setters//
     ///////////////////////
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 
     public int getUserScore() {
         return userScore;
