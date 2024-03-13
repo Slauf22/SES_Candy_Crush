@@ -118,8 +118,45 @@ public class Controller extends Application {
     }
 
     public void HandleLabelClick(MouseEvent event) {
+        Label labelClicked = (Label) event.getSource();
 
-        model.CombinationMadeHandler(LabelGridList, event);
+        ArrayList<Integer> gridValues = new ArrayList<>();
+
+        //Put the integer values of the grid labels into a integer list to send to checkneighbours function
+        for (Label label : LabelGridList) {
+            int intValue = Integer.parseInt(label.getText());
+            gridValues.add(intValue);
+        }
+
+        //The id mentions the grid position: lblRxC. Get row and col from it
+        String gridPosition = labelClicked.getId().substring(3);
+
+        Iterable<Integer> neighboursIndexesIterable = model.CombinationMadeHandler(gridValues, gridPosition);
+
+        ArrayList<String> neighboursGridPositionsArray = new ArrayList<>();
+
+        // Translate index back to RxC format
+        for (Integer i : neighboursIndexesIterable)
+        {
+            int r = i/ model.getHeight() + 1;
+            int c = (i - (r-1)*model.getHeight()) + 1;
+            neighboursGridPositionsArray.add(r + "x" + c);
+        }
+
+        //See if we have a combination with the neighbours
+        if (neighboursGridPositionsArray.size() >= 2)
+        {
+            //Replace neighbours by randoms
+            for (Integer idx : neighboursIndexesIterable)
+            {
+                LabelGridList.get(idx).setText(Integer.toString(model.GenerateRandomNumber()));
+            }
+
+            //Set clicked to random
+            labelClicked.setText(Integer.toString(model.GenerateRandomNumber()));
+
+            model.IncreaseScore(neighboursGridPositionsArray.size() + 1);
+        }
 
         ScoreLbl.setText("Score: " + model.getUserScore());
     }
