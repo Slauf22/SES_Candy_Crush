@@ -18,38 +18,24 @@ public class ModelTest {
     }
 
     @Test
-    public void RandomizeTwoGridsTest(){
-        Model model = new Model(2,2);
+    public void CheckIfInitialScoreIs0Test(){
+        Model model = new Model(4,4);
 
-        ArrayList<Label> labelArrayListOriginal = new ArrayList<>();
-
-        Label lbl1 = new Label();
-        Label lbl2 = new Label();
-        Label lbl3 = new Label();
-        Label lbl4 = new Label();
-
-        lbl1.setText("8");
-        lbl2.setText("8");
-        lbl3.setText("8");
-        lbl4.setText("8");
-
-        labelArrayListOriginal.add(lbl1);
-        labelArrayListOriginal.add(lbl2);
-        labelArrayListOriginal.add(lbl3);
-        labelArrayListOriginal.add(lbl4);
-
-        ArrayList<Label> labelArrayListRandomized = new ArrayList<>(labelArrayListOriginal);
-
-        model.RandomizeGrid(labelArrayListRandomized);
-
-        assert(!(labelArrayListOriginal.equals(labelArrayListRandomized)));
+        assertEquals(model.getUserScore(),0);
     }
 
     @Test
-    public void ModelContructorSetHeightWidthTest(){
+    public void ModelContructorSetHeightTest(){
         Model model = new Model(4,4);
 
-        assert(model.getHeight() == 4 && model.getWidth() == 4);
+        assert(model.getHeight() == 4);
+    }
+
+    @Test
+    public void ModelContructorSetWidthTest(){
+        Model model = new Model(4,4);
+
+        assert(model.getWidth() == 4);
     }
 
     @Test
@@ -76,5 +62,25 @@ public class ModelTest {
         model.setPlayerName("Rauf");
 
         assertEquals(model.getPlayerName(),"Rauf");
+    }
+
+    @Test
+    public void RandomizeGridCompareToDefaultGridTest(){
+        Model model = new Model(4,4);
+
+        ArrayList<Label> grid = new ArrayList<>();
+
+        for(int i = 0; i < 16; i++)
+        {
+            Label lbl = new Label();
+            lbl.setText("8");
+            grid.add(lbl);
+        }
+
+        ArrayList<Label> randomizedGrid = new ArrayList<>(grid);
+
+        model.RandomizeGrid(randomizedGrid);
+
+        assert(!randomizedGrid.equals(grid));
     }
 }
