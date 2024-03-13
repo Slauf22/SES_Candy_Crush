@@ -68,19 +68,14 @@ public class ModelTest {
     public void RandomizeGridCompareToDefaultGridTest(){
         Model model = new Model(4,4);
 
-        ArrayList<Label> grid = new ArrayList<>();
+        ArrayList<String> gridValues = new ArrayList<>();
 
-        for(int i = 0; i < 16; i++)
-        {
-            Label lbl = new Label();
-            lbl.setText("8");
-            grid.add(lbl);
+        for (int i = 0; i < 16; i++){
+            gridValues.add("8");
         }
 
-        ArrayList<Label> randomizedGrid = new ArrayList<>(grid);
+        ArrayList<String> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedGrid());
 
-        model.RandomizeGrid(randomizedGrid);
-
-        assert(!randomizedGrid.equals(grid));
+        assert(!gridValuesRandomized.equals(gridValues));
     }
 }

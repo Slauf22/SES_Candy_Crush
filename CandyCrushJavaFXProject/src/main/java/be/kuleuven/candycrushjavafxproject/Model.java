@@ -57,14 +57,18 @@ public class Model {
     ////////////////////
 
     //Function randomized the grid
-    public void RandomizeGrid(ArrayList<Label> labelGridList)
+    public ArrayList<String> GenerateRandomizedGrid()
     {
         Random random = new Random();
 
+        ArrayList<String> RandomizedValues = new ArrayList<>();
+
         for (int i = 0; i < width*height; i++) {
             int randomNumber = random.nextInt(5) + 1;
-            labelGridList.get(i).setText(String.valueOf(randomNumber));
+            RandomizedValues.add(String.valueOf(randomNumber));
         }
+
+        return RandomizedValues;
     }
 
     //Function handles when a user clicks on a number on the grid.

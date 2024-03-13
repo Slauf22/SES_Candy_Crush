@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.controlsfx.control.PropertySheet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class Controller extends Application {
     ////////////////////
 
     private Stage stage;
-    private Model model;
-    private View view;
+    private final Model model;
+    private final View view;
 
     ///////////////
     //Constructor//
@@ -77,7 +78,7 @@ public class Controller extends Application {
         UpdateNameLabel();
         LoadGridLabelIds();
 
-        model.RandomizeGrid(LabelGridList);
+        SetLabelsToRandomized();
 
         stage.show();
     }
@@ -113,7 +114,7 @@ public class Controller extends Application {
     }
 
     public void RandomizeButtonHandler(ActionEvent event) throws IOException{
-        model.RandomizeGrid(LabelGridList);
+        SetLabelsToRandomized();
     }
 
     public void HandleLabelClick(MouseEvent event) {
@@ -125,5 +126,15 @@ public class Controller extends Application {
 
     public void RestartButtonHandler() throws IOException {
         view.CreateLoginWindow(stage);
+    }
+
+    private void SetLabelsToRandomized()
+    {
+        ArrayList<String> RandomizedValuesList = new ArrayList<>(model.GenerateRandomizedGrid());
+
+        for (int i = 0; i < model.getWidth()*model.getHeight(); i++)
+        {
+            LabelGridList.get(i).setText(RandomizedValuesList.get(i));
+        }
     }
 }
