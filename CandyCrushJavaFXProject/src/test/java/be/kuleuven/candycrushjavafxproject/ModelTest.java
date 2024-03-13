@@ -1,5 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
+import org.controlsfx.control.PropertySheet;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import javafx.scene.control.Label;
@@ -77,5 +78,14 @@ public class ModelTest {
         ArrayList<String> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedGrid());
 
         assert(!gridValuesRandomized.equals(gridValues));
+    }
+
+    @Test
+    public void CheckIfGenerateRandomGridGeneratesBetween1And5(){
+        Model model = new Model(1,1);
+
+        ArrayList<String> generated= new ArrayList<>(model.GenerateRandomizedGrid());
+
+        assert(Integer.parseInt(generated.getFirst()) >= 1 && Integer.parseInt(generated.getFirst()) <= 5);
     }
 }
