@@ -1,8 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.CheckNeighboursInGrid;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -71,8 +69,7 @@ public class Model {
         return RandomizedValues;
     }
 
-    //Function handles when a user clicks on a number on the grid.
-    public Iterable<Integer> CombinationMadeHandler(ArrayList<Integer> gridValues, String gridPosition)
+    public Iterable<Integer> CombinationMade(ArrayList<Integer> gridValues, String gridPosition)
     {
         CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
 

@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.controlsfx.control.PropertySheet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -131,7 +130,12 @@ public class Controller extends Application {
         //The id mentions the grid position: lblRxC. Get row and col from it
         String gridPosition = labelClicked.getId().substring(3);
 
-        Iterable<Integer> neighboursIndexesIterable = model.CombinationMadeHandler(gridValues, gridPosition);
+        Iterable<Integer> neighboursIndexesIterable = model.CombinationMade(gridValues, gridPosition);
+
+        if (neighboursIndexesIterable == null)
+        {
+            return;
+        }
 
         ArrayList<String> neighboursGridPositionsArray = new ArrayList<>();
 
