@@ -1,13 +1,9 @@
 package be.kuleuven.candycrushjavafxproject;
 
-import org.controlsfx.control.PropertySheet;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import javafx.scene.control.Label;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -148,5 +144,22 @@ public class ModelTest {
 
         // Assert
         assert(Objects.equals(HardcodedIndexes.toString(), neighboursIndexesIterable.toString()));
+    }
+
+    @Test
+    public void IncreaseScoreInMultipleOccassions(){
+        // Arrange
+        Model model = new Model(4,4);
+
+        // Act
+        model.IncreaseScore(5);
+        int score1 = model.getUserScore();
+        model.IncreaseScore(4);
+        int score2 = model.getUserScore();
+        model.IncreaseScore(1);
+        int score3 = model.getUserScore();
+
+        // Assert
+        assert(score1 == 5 && score2 == 9 && score3 == 10);
     }
 }
