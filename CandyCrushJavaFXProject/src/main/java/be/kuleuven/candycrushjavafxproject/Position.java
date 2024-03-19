@@ -1,5 +1,9 @@
 package be.kuleuven.candycrushjavafxproject;
 
+import be.kuleuven.CheckNeighboursInGrid;
+
+import java.util.ArrayList;
+
 public record Position(int row, int col, BoardSize boardSize) {
     public Position {
         if (row == 0 || col == 0 || row > boardSize.rows() || col > boardSize.cols()) {
@@ -28,4 +32,49 @@ public record Position(int row, int col, BoardSize boardSize) {
         return new Position(r,c,size);
     }
 
+    public Iterable<Position> neighboursPositions(){
+        ArrayList<Position> neighbourPositions = new ArrayList<>();
+        Position position;
+
+        if (row - 1 > 0){ // up
+            if (col - 1 > 0){ // left up
+                position = new Position(this.row-1,this.col-1,this.boardSize);
+                neighbourPositions.add(position);
+            }
+
+            position = new Position(this.row-1,this.col,this.boardSize);
+            neighbourPositions.add(position);
+
+            if (col + 1 <= boardSize.cols()){ // right up
+                position = new Position(this.row-1,this.col+1,this.boardSize);
+                neighbourPositions.add(position);
+            }
+        }
+
+        if (col - 1 > 0){// left
+            position = new Position(this.row,this.col - 1, this.boardSize);
+            neighbourPositions.add(position);
+        }
+
+        if (col + 1 <= boardSize.cols()){// right
+            position = new Position(this.row,this.col + 1, this.boardSize);
+            neighbourPositions.add(position);
+        }
+
+        if (row + 1 <= boardSize.rows()){ // down
+            if (col - 1 > 0){ // left down
+                position = new Position(this.row+1,this.col-1,this.boardSize);
+                neighbourPositions.add(position);
+            }
+
+            position = new Position(this.row+1,this.col,this.boardSize);
+            neighbourPositions.add(position);
+
+            if (col + 1 <= boardSize.cols()){ // right down
+                position = new Position(this.row+1,this.col+1,this.boardSize);
+                neighbourPositions.add(position);
+            }
+        }
+        return neighbourPositions;
+    }
 }
