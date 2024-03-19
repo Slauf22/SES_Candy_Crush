@@ -77,4 +77,8 @@ public record Position(int row, int col, BoardSize boardSize) {
         }
         return neighbourPositions;
     }
+
+    public boolean isLastColumn(){
+        return col == boardSize.cols();
+    }
 }

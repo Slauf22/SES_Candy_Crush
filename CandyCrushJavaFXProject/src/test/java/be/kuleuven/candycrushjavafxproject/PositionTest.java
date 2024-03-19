@@ -57,4 +57,12 @@ public class PositionTest {
                 neighbourPositions.get(7).toIndex() == 10
         );
     }
+
+    @Test
+    public void CheckIfIn4x4GridPosition1x4IsLastOfRow_True(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Position position = new Position(1,4, boardSize);
+
+        assert (position.isLastColumn());
+    }
 }
