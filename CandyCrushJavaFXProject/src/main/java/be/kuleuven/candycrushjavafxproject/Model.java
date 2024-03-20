@@ -1,6 +1,7 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.CheckNeighboursInGrid;
+import be.kuleuven.candycrushjavafxproject.Candies.*;
 import javafx.geometry.Pos;
 
 import java.util.ArrayList;
@@ -53,18 +54,37 @@ public class Model {
     ////////////////////
 
     //Function randomized the grid
-    public ArrayList<String> GenerateRandomizedGrid()
+    public ArrayList<Candy> GenerateRandomizedGrid()
     {
         Random random = new Random();
 
-        ArrayList<String> RandomizedValues = new ArrayList<>();
+        ArrayList<Candy> RandomizedCandies = new ArrayList<>();
 
         for (int i = 0; i < boardSize.cols() * boardSize.rows(); i++) {
-            int randomNumber = random.nextInt(5) + 1;
-            RandomizedValues.add(String.valueOf(randomNumber));
+            RandomizedCandies.add(generateRandomCandy());
         }
 
-        return RandomizedValues;
+        return RandomizedCandies;
+    }
+
+    private Candy generateRandomCandy(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(6);
+
+        if (randomNumber == 5){
+            return new rowDeleteCandy(5);
+        }
+        if (randomNumber == 4){
+            return new extraMoveCandy(6);
+        }
+        if (randomNumber == 3){
+            return new doublePointsCandy(7);
+        }
+        if (randomNumber == 2){
+            return new borderDeleteCandy(8);
+        }
+
+        return new normalCandy(random.nextInt(4));
     }
 
     public Iterable<Position> CombinationMade(ArrayList<Integer> gridValues, String gridPosition)

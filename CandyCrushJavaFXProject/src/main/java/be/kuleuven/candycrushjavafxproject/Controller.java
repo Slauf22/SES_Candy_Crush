@@ -1,5 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
+import be.kuleuven.candycrushjavafxproject.Candies.Candy;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -173,11 +174,11 @@ public class Controller extends Application {
 
     private void SetLabelsToRandomized()
     {
-        ArrayList<String> RandomizedValuesList = new ArrayList<>(model.GenerateRandomizedGrid());
+        ArrayList<Candy> RandomizedValuesList = new ArrayList<>(model.GenerateRandomizedGrid());
 
         for (int i = 0; i < model.getWidth()*model.getHeight(); i++)
         {
-            LabelGridList.get(i).setText(RandomizedValuesList.get(i));
+            LabelGridList.get(i).setText(Integer.toString(RandomizedValuesList.get(i).getColor()));
         }
     }
 }

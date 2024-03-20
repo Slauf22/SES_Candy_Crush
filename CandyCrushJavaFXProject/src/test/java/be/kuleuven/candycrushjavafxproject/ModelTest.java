@@ -1,5 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
+import be.kuleuven.candycrushjavafxproject.Candies.Candy;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,30 +103,35 @@ public class ModelTest {
         BoardSize boardSize = new BoardSize(4,4);
         Model model = new Model(boardSize);
 
-        ArrayList<String> gridValues = new ArrayList<>();
+        ArrayList<Integer> gridValues = new ArrayList<>();
 
         for (int i = 0; i < 16; i++){
-            gridValues.add("8");
+            gridValues.add(8);
         }
 
         // Act
-        ArrayList<String> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedGrid());
+        ArrayList<Candy> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedGrid());
+        ArrayList<Integer> values = new ArrayList<>();
+
+        for (Candy candy: gridValuesRandomized){
+            values.add(candy.getColor());
+        }
 
         // Assert
-        assert(!gridValuesRandomized.equals(gridValues));
+        assert(!values.equals(gridValues));
     }
 
     @Test
-    public void CheckIfGenerateRandomGridGeneratesBetween1And5(){
+    public void CheckIfGenerateRandomGridGeneratesBetween0And8(){
         // Arrange
         BoardSize boardSize = new BoardSize(1,1);
         Model model = new Model(boardSize);
 
         // Act
-        ArrayList<String> generated= new ArrayList<>(model.GenerateRandomizedGrid());
+        ArrayList<Candy> generated = new ArrayList<>(model.GenerateRandomizedGrid());
 
         // Assert
-        assert(Integer.parseInt(generated.getFirst()) >= 1 && Integer.parseInt(generated.getFirst()) <= 5);
+        assert((generated.getFirst().getColor()) >= 0 && (generated.getFirst().getColor()) <= 8);
     }
 
     @Test
