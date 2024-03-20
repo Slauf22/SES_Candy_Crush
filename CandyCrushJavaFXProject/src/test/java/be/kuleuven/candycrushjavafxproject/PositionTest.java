@@ -65,4 +65,12 @@ public class PositionTest {
 
         assert (position.isLastColumn());
     }
+
+    @Test
+    public void CheckPositionsFor2x2GridIndexesIncremented(){
+        BoardSize boardSize = new BoardSize(2,2);
+        ArrayList<Position> positions = (ArrayList<Position>) boardSize.positions();
+
+        assert ((positions.get(0).toIndex() == 0) && (positions.get(1).toIndex() == 1) && (positions.get(2).toIndex() == 2) && (positions.get(3).toIndex() == 3));
+    }
 }

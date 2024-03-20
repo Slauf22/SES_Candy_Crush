@@ -12,7 +12,7 @@ public record Position(int row, int col, BoardSize boardSize) {
     }
 
     public int toIndex(){
-        return (row - 1) * 4 + (col - 1);
+        return (row - 1) * boardSize.cols() + (col - 1);
     }
 
     public static Position fromIndex(int index, BoardSize size){
