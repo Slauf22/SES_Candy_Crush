@@ -4,29 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <Label layoutX="236.0" layoutY="36.0" text="Candy Crush">
       <font>
          <Font size="23.0" />
       </font>
    </Label>
    <Label fx:id="NameLabel" contentDisplay="CENTER" layoutX="250.0" layoutY="70.0" prefHeight="21.0" prefWidth="99.0" text="Player Name Here" textAlignment="CENTER" />
-   <Label fx:id="lbl1x1" layoutX="232.0" layoutY="170.0" onMouseClicked="#HandleLabelClick" prefHeight="26.0" prefWidth="7.0" text="8" textAlignment="CENTER" />
-   <Label fx:id="lbl1x2" layoutX="279.0" layoutY="173.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl1x3" layoutX="318.0" layoutY="173.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl1x4" layoutX="360.0" layoutY="173.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl2x1" layoutX="232.0" layoutY="211.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl3x1" layoutX="232.0" layoutY="255.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl4x1" layoutX="232.0" layoutY="295.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl2x2" layoutX="279.0" layoutY="210.0" onMouseClicked="#HandleLabelClick" prefHeight="18.0" prefWidth="7.0" text="8" />
-   <Label fx:id="lbl2x4" layoutX="360.0" layoutY="210.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl2x3" layoutX="318.0" layoutY="210.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl3x2" layoutX="279.0" layoutY="255.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl3x3" layoutX="318.0" layoutY="255.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl3x4" layoutX="360.0" layoutY="255.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl4x2" layoutX="279.0" layoutY="295.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl4x3" layoutX="318.0" layoutY="295.0" onMouseClicked="#HandleLabelClick" text="8" />
-   <Label fx:id="lbl4x4" layoutX="360.0" layoutY="295.0" onMouseClicked="#HandleLabelClick" text="8" />
    <Button fx:id="RandomizeButton" layoutX="64.0" layoutY="187.0" mnemonicParsing="false" onAction="#RandomizeButtonHandler" text="Randomize Grid" />
    <Button fx:id="RestartButton" layoutX="87.0" layoutY="273.0" mnemonicParsing="false" text="Restart" onAction="#RestartButtonHandler"/>
    <Label fx:id="ScoreLbl" layoutX="414.0" layoutY="213.0" text="Score: 0 ">

@@ -2,7 +2,7 @@ package be.kuleuven.candycrushjavafxproject.Candies;
 
 public record extraMoveCandy(int color) implements Candy{
     public extraMoveCandy{
-        color = 6;
+        color = 5;
     }
 
     @Override

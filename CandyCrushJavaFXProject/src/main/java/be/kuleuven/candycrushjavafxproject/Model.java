@@ -2,7 +2,6 @@ package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.CheckNeighboursInGrid;
 import be.kuleuven.candycrushjavafxproject.Candies.*;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -54,50 +53,53 @@ public class Model {
     ////////////////////
 
     //Function randomized the grid
-    public ArrayList<Candy> GenerateRandomizedGrid()
+    public ArrayList<Candy> GenerateRandomizedCandies()
     {
         Random random = new Random();
 
         ArrayList<Candy> RandomizedCandies = new ArrayList<>();
 
         for (int i = 0; i < boardSize.cols() * boardSize.rows(); i++) {
-            RandomizedCandies.add(generateRandomCandy());
+            RandomizedCandies.add(GenerateRandomCandy());
         }
 
         return RandomizedCandies;
     }
 
-    private Candy generateRandomCandy(){
+    public Candy GenerateRandomCandy(){
         Random random = new Random();
-        int randomNumber = random.nextInt(6);
+        int randomNumber = random.nextInt(40);
 
-        if (randomNumber == 5){
-            return new rowDeleteCandy(5);
+        //Minder kans om een speciale snoep te genereren dan een normale
+        if (randomNumber == 39){
+            return new rowDeleteCandy(4);
         }
-        if (randomNumber == 4){
-            return new extraMoveCandy(6);
+        if (randomNumber == 38){
+            return new extraMoveCandy(5);
         }
-        if (randomNumber == 3){
-            return new doublePointsCandy(7);
+        if (randomNumber == 37){
+            return new doublePointsCandy(6);
         }
-        if (randomNumber == 2){
-            return new borderDeleteCandy(8);
+        if (randomNumber == 36){
+            return new borderDeleteCandy(7);
         }
 
         return new normalCandy(random.nextInt(4));
+    }
+
+    public Position RxCToPosition(String gridPosition){
+        int row = Integer.parseInt(gridPosition.substring(0,1));
+        int col = Integer.parseInt(gridPosition.substring(2,3));
+
+        return new Position(row,col,boardSize);
     }
 
     public Iterable<Position> CombinationMade(ArrayList<Integer> gridValues, String gridPosition)
     {
         CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
 
-        int row = Integer.parseInt(gridPosition.substring(0,1));
-        int col = Integer.parseInt(gridPosition.substring(2,3));
-
-        Position position = new Position(row,col,boardSize);
-
         //Get index from known row and cols. Function needs index from 0 to gridsize - 1;
-        int index = position.toIndex();
+        int index = RxCToPosition(gridPosition).toIndex();
 
         ArrayList<Integer> neighbourIds = (ArrayList<Integer>) checkNeighboursInGrid.getSameNeighboursIds(gridValues, boardSize.cols(), boardSize.rows(), index);
 

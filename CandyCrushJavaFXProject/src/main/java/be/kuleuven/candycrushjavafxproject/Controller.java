@@ -5,14 +5,17 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Controller extends Application {
@@ -28,15 +31,9 @@ public class Controller extends Application {
     @FXML
     public Label NameLabel;
     @FXML
-    private Label   lbl1x1,lbl1x2,lbl1x3,lbl1x4,
-                    lbl2x1,lbl2x2,lbl2x3,lbl2x4,
-                    lbl3x1, lbl3x2, lbl3x3, lbl3x4,
-                    lbl4x1, lbl4x2, lbl4x3, lbl4x4;
-    @FXML
-    public ArrayList<Label> LabelGridList = new ArrayList<>();
-
-    @FXML
     public Label ScoreLbl;
+    @FXML
+    public AnchorPane pane;
 
     ////////////////////
     //Member Variables//
@@ -45,6 +42,9 @@ public class Controller extends Application {
     private Stage stage;
     private final Model model;
     private final View view;
+    private final BoardSize boardSize;
+
+    private ArrayList<Candy> gridCandiesList;
 
     ///////////////
     //Constructor//
@@ -52,7 +52,7 @@ public class Controller extends Application {
 
     public Controller()
     {
-        BoardSize boardSize = new BoardSize(4,4);
+        boardSize = new BoardSize(4,4);
         model = new Model(boardSize);
         view = new View();
     }
@@ -78,18 +78,10 @@ public class Controller extends Application {
         view.CreateGameWindow(stage, this);
 
         UpdateNameLabel();
-        LoadGridLabelIds();
 
-        SetLabelsToRandomized();
+        GenerateGridNodes();
 
         stage.show();
-    }
-
-    public void LoadGridLabelIds() {
-        LabelGridList.add(lbl1x1); LabelGridList.add(lbl1x2); LabelGridList.add(lbl1x3); LabelGridList.add(lbl1x4);
-        LabelGridList.add(lbl2x1); LabelGridList.add(lbl2x2); LabelGridList.add(lbl2x3); LabelGridList.add(lbl2x4);
-        LabelGridList.add(lbl3x1); LabelGridList.add(lbl3x2); LabelGridList.add(lbl3x3); LabelGridList.add(lbl3x4);
-        LabelGridList.add(lbl4x1); LabelGridList.add(lbl4x2); LabelGridList.add(lbl4x3); LabelGridList.add(lbl4x4);
     }
 
     public void UpdateNameLabel() {
@@ -116,24 +108,24 @@ public class Controller extends Application {
     }
 
     public void RandomizeButtonHandler(ActionEvent event) throws IOException{
-        SetLabelsToRandomized();
+        removeGrid();
+        GenerateGridNodes();
     }
 
     public void HandleLabelClick(MouseEvent event) {
-        Label labelClicked = (Label) event.getSource();
+        Node nodeClicked = (Node) event.getSource();
 
-        ArrayList<Integer> gridValues = new ArrayList<>();
+        ArrayList<Integer> gridColorValues = new ArrayList<>();
 
         //Put the integer values of the grid labels into a integer list to send to checkneighbours function
-        for (Label label : LabelGridList) {
-            int intValue = Integer.parseInt(label.getText());
-            gridValues.add(intValue);
+        for (Candy candy : gridCandiesList) {
+            gridColorValues.add(candy.getColor());
         }
 
         //The id mentions the grid position: lblRxC. Get row and col from it
-        String gridPosition = labelClicked.getId().substring(3);
+        String gridPosition = nodeClicked.getId().substring(3);
 
-        Iterable<Position> neighoursPositions = model.CombinationMade(gridValues, gridPosition);
+        Iterable<Position> neighoursPositions = model.CombinationMade(gridColorValues, gridPosition);
 
         if (neighoursPositions == null)
         {
@@ -156,11 +148,14 @@ public class Controller extends Application {
             //Replace neighbours by randoms
             for (Position idx : neighoursPositions)
             {
-                LabelGridList.get(idx.toIndex()).setText(Integer.toString(model.GenerateRandomNumber()));
+                gridCandiesList.set(idx.toIndex(), model.GenerateRandomCandy());
             }
 
             //Set clicked to random
-            labelClicked.setText(Integer.toString(model.GenerateRandomNumber()));
+            gridCandiesList.set(model.RxCToPosition(gridPosition).toIndex(),model.GenerateRandomCandy());
+
+            //Update the grid
+            updateGrid();
 
             model.IncreaseScore(neighboursGridPositionsArray.size() + 1);
         }
@@ -172,13 +167,40 @@ public class Controller extends Application {
         view.CreateLoginWindow(stage);
     }
 
-    private void SetLabelsToRandomized()
+    private void GenerateGridNodes()
     {
-        ArrayList<Candy> RandomizedValuesList = new ArrayList<>(model.GenerateRandomizedGrid());
+        gridCandiesList = new ArrayList<>(model.GenerateRandomizedCandies());
 
-        for (int i = 0; i < model.getWidth()*model.getHeight(); i++)
+        updateGrid();
+    }
+
+    private void updateGrid(){
+        int cnt = 0;
+
+        for (Candy candy: gridCandiesList)
         {
-            LabelGridList.get(i).setText(Integer.toString(RandomizedValuesList.get(i).getColor()));
+            pane.getChildren().add(view.makeCandyShape(Position.fromIndex(cnt,boardSize),candy));
+            cnt++;
+        }
+    }
+
+    private void removeGrid(){
+        ArrayList<String> idsToRemoveList = new ArrayList<>();
+
+        idsToRemoveList.add("lbl1x1");idsToRemoveList.add("lbl1x2");idsToRemoveList.add("lbl1x3");idsToRemoveList.add("lbl1x4");
+        idsToRemoveList.add("lbl2x1");idsToRemoveList.add("lbl2x2");idsToRemoveList.add("lbl2x3");idsToRemoveList.add("lbl2x4");
+        idsToRemoveList.add("lbl3x1");idsToRemoveList.add("lbl3x2");idsToRemoveList.add("lbl3x3");idsToRemoveList.add("lbl3x4");
+        idsToRemoveList.add("lbl4x1");idsToRemoveList.add("lbl4x2");idsToRemoveList.add("lbl4x3");idsToRemoveList.add("lbl4x4");
+
+        Iterator<Node> iterator = pane.getChildren().iterator();
+
+        while (iterator.hasNext()) {
+            Node node = iterator.next();
+            String nodeId = node.getId();
+
+            if (nodeId != null && idsToRemoveList.contains(nodeId)) {
+                iterator.remove(); // Remove the node from the iterator
+            }
         }
     }
 }

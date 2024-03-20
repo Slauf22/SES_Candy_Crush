@@ -110,7 +110,7 @@ public class ModelTest {
         }
 
         // Act
-        ArrayList<Candy> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedGrid());
+        ArrayList<Candy> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedCandies());
         ArrayList<Integer> values = new ArrayList<>();
 
         for (Candy candy: gridValuesRandomized){
@@ -128,7 +128,7 @@ public class ModelTest {
         Model model = new Model(boardSize);
 
         // Act
-        ArrayList<Candy> generated = new ArrayList<>(model.GenerateRandomizedGrid());
+        ArrayList<Candy> generated = new ArrayList<>(model.GenerateRandomizedCandies());
 
         // Assert
         assert((generated.getFirst().getColor()) >= 0 && (generated.getFirst().getColor()) <= 8);
