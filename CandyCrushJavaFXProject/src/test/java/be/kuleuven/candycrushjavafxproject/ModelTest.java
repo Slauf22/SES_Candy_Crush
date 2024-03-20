@@ -11,7 +11,8 @@ public class ModelTest {
     @Test
     public void IncreaseUserScoreTests(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         // Act
         model.IncreaseScore(5);
@@ -25,7 +26,8 @@ public class ModelTest {
     @Test
     public void CheckIfInitialScoreIs0Test(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         // Act
         int score = model.getUserScore();
@@ -37,7 +39,8 @@ public class ModelTest {
     @Test
     public void ModelContructorSetHeightTest(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);;
 
         // Act
         int height = model.getHeight();
@@ -49,7 +52,8 @@ public class ModelTest {
     @Test
     public void ModelContructorSetWidthTest(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         // Act
         int width = model.getWidth();
@@ -61,7 +65,8 @@ public class ModelTest {
     @Test
     public void GenerateRandomNumberFunctionAbove1Below5Test(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         // Act
         int number1 = model.GenerateRandomNumber();
@@ -81,7 +86,8 @@ public class ModelTest {
     @Test
     public void SetNameTest(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         // Act
         model.setPlayerName("Rauf");
@@ -93,7 +99,8 @@ public class ModelTest {
     @Test
     public void RandomizeGridCompareToDefaultGridTest(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         ArrayList<String> gridValues = new ArrayList<>();
 
@@ -111,7 +118,8 @@ public class ModelTest {
     @Test
     public void CheckIfGenerateRandomGridGeneratesBetween1And5(){
         // Arrange
-        Model model = new Model(1,1);
+        BoardSize boardSize = new BoardSize(1,1);
+        Model model = new Model(boardSize);
 
         // Act
         ArrayList<String> generated= new ArrayList<>(model.GenerateRandomizedGrid());
@@ -123,7 +131,8 @@ public class ModelTest {
     @Test
     public void TestCombinationMadeWithHardCodedGrid(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         ArrayList<Integer> grid = new ArrayList<>();
 
@@ -134,13 +143,13 @@ public class ModelTest {
 
         String gridPosition = "2x1";
 
-        List<Integer> HardcodedIndexes = new ArrayList<>();
-        HardcodedIndexes.add(0);
-        HardcodedIndexes.add(5);
-        HardcodedIndexes.add(8);
+        List<Position> HardcodedIndexes = new ArrayList<>();
+        HardcodedIndexes.add(Position.fromIndex(0,boardSize));
+        HardcodedIndexes.add(Position.fromIndex(5,boardSize));
+        HardcodedIndexes.add(Position.fromIndex(8,boardSize));
 
         // Act
-        Iterable<Integer> neighboursIndexesIterable = model.CombinationMade(grid,gridPosition);
+        Iterable<Position> neighboursIndexesIterable = model.CombinationMade(grid,gridPosition);
 
         // Assert
         assert(Objects.equals(HardcodedIndexes.toString(), neighboursIndexesIterable.toString()));
@@ -149,7 +158,8 @@ public class ModelTest {
     @Test
     public void IncreaseScoreInMultipleOccassions(){
         // Arrange
-        Model model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
 
         // Act
         model.IncreaseScore(5);

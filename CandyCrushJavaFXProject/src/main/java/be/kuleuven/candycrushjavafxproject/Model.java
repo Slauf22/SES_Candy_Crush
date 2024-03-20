@@ -1,6 +1,7 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.CheckNeighboursInGrid;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,17 +14,14 @@ public class Model {
 
     private int userScore = 0;
     private String PlayerName;
-    private int width = 4;
-
-    private int height = 4;
+    private final BoardSize boardSize;
 
     ///////////////
     //Constructor//
     ///////////////
 
-    public Model(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Model(BoardSize boardSize) {
+        this.boardSize = boardSize;
     }
 
     ///////////////////////
@@ -31,11 +29,11 @@ public class Model {
     ///////////////////////
 
     public int getWidth() {
-        return width;
+        return boardSize.cols();
     }
 
     public int getHeight() {
-        return height;
+        return boardSize.rows();
     }
 
     public int getUserScore() {
@@ -61,7 +59,7 @@ public class Model {
 
         ArrayList<String> RandomizedValues = new ArrayList<>();
 
-        for (int i = 0; i < width*height; i++) {
+        for (int i = 0; i < boardSize.cols() * boardSize.rows(); i++) {
             int randomNumber = random.nextInt(5) + 1;
             RandomizedValues.add(String.valueOf(randomNumber));
         }
@@ -69,17 +67,27 @@ public class Model {
         return RandomizedValues;
     }
 
-    public Iterable<Integer> CombinationMade(ArrayList<Integer> gridValues, String gridPosition)
+    public Iterable<Position> CombinationMade(ArrayList<Integer> gridValues, String gridPosition)
     {
         CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
 
         int row = Integer.parseInt(gridPosition.substring(0,1));
         int col = Integer.parseInt(gridPosition.substring(2,3));
 
-        //Get index from known row and cols. Function needs index from 0 to gridsize - 1;
-        int index = (row - 1) * 4 + (col - 1);
+        Position position = new Position(row,col,boardSize);
 
-        return checkNeighboursInGrid.getSameNeighboursIds(gridValues,width,height,index);
+        //Get index from known row and cols. Function needs index from 0 to gridsize - 1;
+        int index = position.toIndex();
+
+        ArrayList<Integer> neighbourIds = (ArrayList<Integer>) checkNeighboursInGrid.getSameNeighboursIds(gridValues, boardSize.cols(), boardSize.rows(), index);
+
+        ArrayList<Position> neighbourPositions = new ArrayList<>();
+
+        for (Integer id: neighbourIds){
+            neighbourPositions.add(Position.fromIndex(id,boardSize));
+        }
+
+        return neighbourPositions;
     }
 
     public int GenerateRandomNumber() {

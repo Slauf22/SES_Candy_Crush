@@ -51,7 +51,8 @@ public class Controller extends Application {
 
     public Controller()
     {
-        model = new Model(4,4);
+        BoardSize boardSize = new BoardSize(4,4);
+        model = new Model(boardSize);
         view = new View();
     }
 
@@ -65,20 +66,6 @@ public class Controller extends Application {
     }
 
     public static void main(String[] args) {
-        //0 1 2 3
-        //4 5 6 7
-        //8 9 10 11
-        //12 13 14 15
-
-        BoardSize boardSize = new BoardSize(4,4);
-        ArrayList<Position> test = (ArrayList<Position>) boardSize.positions();
-
-        for (int i = 0; i < 16; i++){
-            System.out.println(test.get(i).toIndex());
-        }
-
-        System.out.println(test);
-
         launch();
     }
 
@@ -145,9 +132,9 @@ public class Controller extends Application {
         //The id mentions the grid position: lblRxC. Get row and col from it
         String gridPosition = labelClicked.getId().substring(3);
 
-        Iterable<Integer> neighboursIndexesIterable = model.CombinationMade(gridValues, gridPosition);
+        Iterable<Position> neighoursPositions = model.CombinationMade(gridValues, gridPosition);
 
-        if (neighboursIndexesIterable == null)
+        if (neighoursPositions == null)
         {
             return;
         }
@@ -155,10 +142,10 @@ public class Controller extends Application {
         ArrayList<String> neighboursGridPositionsArray = new ArrayList<>();
 
         // Translate index back to RxC format
-        for (Integer i : neighboursIndexesIterable)
+        for (Position i : neighoursPositions)
         {
-            int r = i/ model.getHeight() + 1;
-            int c = (i - (r-1)*model.getHeight()) + 1;
+            int r = i.toIndex()/ model.getHeight() + 1;
+            int c = (i.toIndex() - (r-1)*model.getHeight()) + 1;
             neighboursGridPositionsArray.add(r + "x" + c);
         }
 
@@ -166,9 +153,9 @@ public class Controller extends Application {
         if (neighboursGridPositionsArray.size() >= 2)
         {
             //Replace neighbours by randoms
-            for (Integer idx : neighboursIndexesIterable)
+            for (Position idx : neighoursPositions)
             {
-                LabelGridList.get(idx).setText(Integer.toString(model.GenerateRandomNumber()));
+                LabelGridList.get(idx.toIndex()).setText(Integer.toString(model.GenerateRandomNumber()));
             }
 
             //Set clicked to random
