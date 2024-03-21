@@ -25,6 +25,8 @@ public class View{
     private double rectHeight = 10;
     private double rectWidth = 10;
 
+    private Controller controller;
+
     ////////////////////
     //Member Functions//
     ////////////////////
@@ -43,6 +45,8 @@ public class View{
         FXMLLoader fxmlLoader = new FXMLLoader(Controller.class.getResource("GameScreen.fxml"));
         fxmlLoader.setController(controller);
 
+        this.controller = controller;
+
         Scene scene = new Scene(fxmlLoader.load(), 632, 435);
 
         stage.setScene(scene);
@@ -53,8 +57,6 @@ public class View{
         Node node = null;
         Circle circle;
         Rectangle rectangle;
-
-        Controller controller = new Controller();
 
         switch (candy.getColor()) {
             case 0:

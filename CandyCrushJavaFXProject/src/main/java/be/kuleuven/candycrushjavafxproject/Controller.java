@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class Controller extends Application {
-
     /////////////////////////
     //FXML Widget Variables//
     /////////////////////////
@@ -43,7 +42,6 @@ public class Controller extends Application {
     private final Model model;
     private final View view;
     private final BoardSize boardSize;
-
     private ArrayList<Candy> gridCandiesList;
 
     ///////////////
@@ -55,6 +53,7 @@ public class Controller extends Application {
         boardSize = new BoardSize(4,4);
         model = new Model(boardSize);
         view = new View();
+        gridCandiesList = new ArrayList<>();
     }
 
     ////////////////////
@@ -117,7 +116,6 @@ public class Controller extends Application {
 
         ArrayList<Integer> gridColorValues = new ArrayList<>();
 
-        //Put the integer values of the grid labels into a integer list to send to checkneighbours function
         for (Candy candy : gridCandiesList) {
             gridColorValues.add(candy.getColor());
         }
@@ -155,6 +153,8 @@ public class Controller extends Application {
             gridCandiesList.set(model.RxCToPosition(gridPosition).toIndex(),model.GenerateRandomCandy());
 
             //Update the grid
+            removeGrid();
+
             updateGrid();
 
             model.IncreaseScore(neighboursGridPositionsArray.size() + 1);
@@ -199,7 +199,7 @@ public class Controller extends Application {
             String nodeId = node.getId();
 
             if (nodeId != null && idsToRemoveList.contains(nodeId)) {
-                iterator.remove(); // Remove the node from the iterator
+                iterator.remove();
             }
         }
     }
