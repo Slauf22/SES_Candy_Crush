@@ -121,4 +121,67 @@ public class Model {
     public void IncreaseScore(int value) {
         userScore += value;
     }
+
+    public Iterable<Position> getSameNeighbourPositions(Position position, ArrayList<Candy> gridCandiesList){
+        int indexToCheck = position.toIndex();
+        int height = boardSize.rows();
+        int width = boardSize.cols();
+
+        //Find the row of the index
+        int indexRow = position.row();
+
+        // Find the column of the index
+        int indexCol = position.col();
+
+        //Value of element at index
+        int valueIndex = 0;
+        int indexCnt = 0;
+
+        for (Candy element : gridCandiesList)
+        {
+            if (indexCnt == indexToCheck)
+            {
+                valueIndex = element.getColor();
+                break;
+            }
+            indexCnt++;
+        }
+
+        //Array for saving neighbour positions
+        ArrayList<Position> neighbours = new ArrayList<>();
+
+        int rowCounter = 1;
+        int colCounter = 1;
+
+        // Loop over grid
+        for (Candy element : gridCandiesList)
+        {
+            // We are in a neighbouring column, left or right. Can also be same column if element is one row above or below
+            if (colCounter == indexCol - 1  || colCounter == indexCol + 1 || colCounter == indexCol)
+            {
+                // We are in a neighbouring row, above or below. Can also be same row if element is one col left or right
+                if (rowCounter == indexRow - 1 || rowCounter == indexRow + 1 || rowCounter == indexRow)
+                {
+                    //If neighbour has same value, add index to arraylist. Also check if the loop isn't at the indexToCheck.
+                    if ((element.getColor() == valueIndex) && !(rowCounter == indexRow && colCounter == indexCol))
+                    {
+                        neighbours.add(RxCToPosition(Integer.toString(rowCounter) + "x" + Integer.toString(colCounter)));
+                    }
+                }
+            }
+
+            //Update row and col of element in grid
+            if(colCounter == 4)
+            {
+                colCounter = 1;
+                rowCounter++;
+            }
+            else
+            {
+                colCounter++;
+            }
+        }
+
+        return neighbours;
+    }
 }
