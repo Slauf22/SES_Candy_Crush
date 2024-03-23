@@ -123,9 +123,6 @@ public class Model {
     }
 
     public Iterable<Position> getSameNeighbourPositions(Position position, ArrayList<Candy> gridCandiesList){
-        int indexToCheck = position.toIndex();
-        int height = boardSize.rows();
-        int width = boardSize.cols();
 
         //Find the row of the index
         int indexRow = position.row();
@@ -133,19 +130,8 @@ public class Model {
         // Find the column of the index
         int indexCol = position.col();
 
-        //Value of element at index
-        int valueIndex = 0;
-        int indexCnt = 0;
-
-        for (Candy element : gridCandiesList)
-        {
-            if (indexCnt == indexToCheck)
-            {
-                valueIndex = element.getColor();
-                break;
-            }
-            indexCnt++;
-        }
+        //Value (color) of element at index
+        int valueIndex = gridCandiesList.get(position.toIndex()).getColor();
 
         //Array for saving neighbour positions
         ArrayList<Position> neighbours = new ArrayList<>();
