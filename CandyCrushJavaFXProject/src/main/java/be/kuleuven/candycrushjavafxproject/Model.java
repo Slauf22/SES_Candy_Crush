@@ -55,8 +55,6 @@ public class Model {
     //Function randomized the grid
     public ArrayList<Candy> GenerateRandomizedCandies()
     {
-        Random random = new Random();
-
         ArrayList<Candy> RandomizedCandies = new ArrayList<>();
 
         for (int i = 0; i < boardSize.cols() * boardSize.rows(); i++) {

@@ -114,12 +114,6 @@ public class Controller extends Application {
     public void HandleLabelClick(MouseEvent event) {
         Node nodeClicked = (Node) event.getSource();
 
-        ArrayList<Integer> gridColorValues = new ArrayList<>();
-
-        for (Candy candy : gridCandiesList) {
-            gridColorValues.add(candy.getColor());
-        }
-
         //The id mentions the grid position: lblRxC. Get row and col from it
         String gridPosition = nodeClicked.getId().substring(3);
         Position pressedLabelPosition = model.RxCToPosition(gridPosition);
