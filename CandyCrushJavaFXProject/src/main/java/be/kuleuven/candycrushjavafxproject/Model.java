@@ -2,6 +2,7 @@ package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.CheckNeighboursInGrid;
 import be.kuleuven.candycrushjavafxproject.Candies.*;
+import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,6 +16,7 @@ public class Model {
     private int userScore = 0;
     private String PlayerName;
     private final BoardSize boardSize;
+    private Board<Candy> board;
 
     ///////////////
     //Constructor//
