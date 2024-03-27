@@ -30,6 +30,8 @@ public class Board <T>{
     }
 
     public void fill(Function<Position, T> cellCreator){
+        gridData.clear();
+
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
                 Position currentPosition = new Position(i+1,j+1,boardSize);

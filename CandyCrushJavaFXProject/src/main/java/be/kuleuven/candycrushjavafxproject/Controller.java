@@ -1,6 +1,9 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.candycrushjavafxproject.Candies.Candy;
+import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
+import be.kuleuven.candycrushjavafxproject.Candies.rowDeleteCandy;
+import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Controller extends Application {
     /////////////////////////
@@ -43,6 +47,7 @@ public class Controller extends Application {
     private final View view;
     private final BoardSize boardSize;
     private ArrayList<Candy> gridCandiesList;
+    private Board<Candy> candyBoard;
 
     ///////////////
     //Constructor//
@@ -54,6 +59,7 @@ public class Controller extends Application {
         model = new Model(boardSize);
         view = new View();
         gridCandiesList = new ArrayList<>();
+        candyBoard = new Board<>(boardSize);
     }
 
     ////////////////////
@@ -164,7 +170,11 @@ public class Controller extends Application {
 
     private void GenerateGridNodes()
     {
-        gridCandiesList = new ArrayList<>(model.GenerateRandomizedCandies());
+        Function<Position, Candy> cellCreator = position -> {
+            return model.GenerateRandomCandy();
+        };
+
+        candyBoard.fill(cellCreator);
 
         updateGrid();
     }
