@@ -46,7 +46,6 @@ public class Controller extends Application {
     private final Model model;
     private final View view;
     private final BoardSize boardSize;
-    private ArrayList<Candy> gridCandiesList;
     private Board<Candy> candyBoard;
 
     ///////////////
@@ -58,7 +57,6 @@ public class Controller extends Application {
         boardSize = new BoardSize(4,4);
         model = new Model(boardSize);
         view = new View();
-        gridCandiesList = new ArrayList<>();
         candyBoard = new Board<>(boardSize);
     }
 
@@ -124,7 +122,7 @@ public class Controller extends Application {
         String gridPosition = nodeClicked.getId().substring(3);
         Position pressedLabelPosition = model.RxCToPosition(gridPosition);
 
-        Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition,gridCandiesList);
+        Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition,candyBoard);
 
         if (neighoursPositions == null)
         {
@@ -147,11 +145,11 @@ public class Controller extends Application {
             //Replace neighbours by randoms
             for (Position idx : neighoursPositions)
             {
-                gridCandiesList.set(idx.toIndex(), model.GenerateRandomCandy());
+                candyBoard.replaceCellAt(idx,model.GenerateRandomCandy());
             }
 
             //Set clicked to random
-            gridCandiesList.set(model.RxCToPosition(gridPosition).toIndex(),model.GenerateRandomCandy());
+            candyBoard.replaceCellAt(model.RxCToPosition(gridPosition), model.GenerateRandomCandy());
 
             //Update the grid
             removeGrid();
@@ -180,12 +178,10 @@ public class Controller extends Application {
     }
 
     private void updateGrid(){
-        int cnt = 0;
-
-        for (Candy candy: gridCandiesList)
+        for (int i = 0; i < boardSize.cols()* boardSize.rows(); i++)
         {
-            pane.getChildren().add(view.makeCandyShape(Position.fromIndex(cnt,boardSize),candy));
-            cnt++;
+            Position currentPosition = Position.fromIndex(i,boardSize);
+            pane.getChildren().add(view.makeCandyShape(currentPosition, candyBoard.getCellAt(currentPosition)));
         }
     }
 

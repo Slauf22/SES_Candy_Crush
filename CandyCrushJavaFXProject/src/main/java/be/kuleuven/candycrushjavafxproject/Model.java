@@ -122,7 +122,7 @@ public class Model {
         userScore += value;
     }
 
-    public Iterable<Position> getSameNeighbourPositions(Position position, ArrayList<Candy> gridCandiesList){
+    public Iterable<Position> getSameNeighbourPositions(Position position, Board<Candy> candyBoard){
 
         //Find the row of the index
         int indexRow = position.row();
@@ -131,7 +131,7 @@ public class Model {
         int indexCol = position.col();
 
         //Value (color) of element at index
-        int valueIndex = gridCandiesList.get(position.toIndex()).getColor();
+        int valueIndex = candyBoard.getCellAt(position).getColor();
 
         //Array for saving neighbour positions
         ArrayList<Position> neighbours = new ArrayList<>();
@@ -140,7 +140,7 @@ public class Model {
         int colCounter = 1;
 
         // Loop over grid
-        for (Candy element : gridCandiesList)
+        for (int i = 0; i < boardSize.rows()* boardSize.cols(); i++)
         {
             // We are in a neighbouring column, left or right. Can also be same column if element is one row above or below
             if (colCounter == indexCol - 1  || colCounter == indexCol + 1 || colCounter == indexCol)
@@ -149,7 +149,7 @@ public class Model {
                 if (rowCounter == indexRow - 1 || rowCounter == indexRow + 1 || rowCounter == indexRow)
                 {
                     //If neighbour has same value, add index to arraylist. Also check if the loop isn't at the indexToCheck.
-                    if ((element.getColor() == valueIndex) && !(rowCounter == indexRow && colCounter == indexCol))
+                    if ((candyBoard.getCellAt(Position.fromIndex(i,boardSize)).getColor() == valueIndex) && !(rowCounter == indexRow && colCounter == indexCol))
                     {
                         neighbours.add(RxCToPosition(Integer.toString(rowCounter) + "x" + Integer.toString(colCounter)));
                     }
