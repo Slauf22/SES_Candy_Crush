@@ -54,18 +54,6 @@ public class Model {
     //Member Functions//
     ////////////////////
 
-    //Function randomized the grid
-    public ArrayList<Candy> GenerateRandomizedCandies()
-    {
-        ArrayList<Candy> RandomizedCandies = new ArrayList<>();
-
-        for (int i = 0; i < boardSize.cols() * boardSize.rows(); i++) {
-            RandomizedCandies.add(GenerateRandomCandy());
-        }
-
-        return RandomizedCandies;
-    }
-
     public Candy GenerateRandomCandy(){
         Random random = new Random();
         int randomNumber = random.nextInt(40);
@@ -92,30 +80,6 @@ public class Model {
         int col = Integer.parseInt(gridPosition.substring(2,3));
 
         return new Position(row,col,boardSize);
-    }
-
-    public Iterable<Position> CombinationMade(ArrayList<Integer> gridValues, String gridPosition)
-    {
-        CheckNeighboursInGrid checkNeighboursInGrid = new CheckNeighboursInGrid();
-
-        //Get index from known row and cols. Function needs index from 0 to gridsize - 1;
-        int index = RxCToPosition(gridPosition).toIndex();
-
-        ArrayList<Integer> neighbourIds = (ArrayList<Integer>) checkNeighboursInGrid.getSameNeighboursIds(gridValues, boardSize.cols(), boardSize.rows(), index);
-
-        ArrayList<Position> neighbourPositions = new ArrayList<>();
-
-        for (Integer id: neighbourIds){
-            neighbourPositions.add(Position.fromIndex(id,boardSize));
-        }
-
-        return neighbourPositions;
-    }
-
-    public int GenerateRandomNumber() {
-        Random random = new Random();
-
-        return random.nextInt(5) + 1;
     }
 
     public void IncreaseScore(int value) {

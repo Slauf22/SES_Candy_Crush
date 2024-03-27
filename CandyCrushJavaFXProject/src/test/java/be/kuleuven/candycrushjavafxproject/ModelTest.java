@@ -64,27 +64,6 @@ public class ModelTest {
     }
 
     @Test
-    public void GenerateRandomNumberFunctionAbove1Below5Test(){
-        // Arrange
-        BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
-
-        // Act
-        int number1 = model.GenerateRandomNumber();
-        int number2 = model.GenerateRandomNumber();
-        int number3 = model.GenerateRandomNumber();
-        int number4 = model.GenerateRandomNumber();
-        int number5 = model.GenerateRandomNumber();
-
-        // Assert
-        assert ((number1 >= 1 && number1 <= 5) &&
-                (number2 >= 1 && number2 <= 5) &&
-                (number3 >= 1 && number3 <= 5) &&
-                (number4 >= 1 && number4 <= 5) &&
-                (number5 >= 1 && number5 <= 5));
-    }
-
-    @Test
     public void SetNameTest(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
@@ -95,70 +74,6 @@ public class ModelTest {
 
         // Assert
         assertEquals(model.getPlayerName(),"Rauf");
-    }
-
-    @Test
-    public void RandomizeGridCompareToDefaultGridTest(){
-        // Arrange
-        BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
-
-        ArrayList<Integer> gridValues = new ArrayList<>();
-
-        for (int i = 0; i < 16; i++){
-            gridValues.add(8);
-        }
-
-        // Act
-        ArrayList<Candy> gridValuesRandomized = new ArrayList<>(model.GenerateRandomizedCandies());
-        ArrayList<Integer> values = new ArrayList<>();
-
-        for (Candy candy: gridValuesRandomized){
-            values.add(candy.getColor());
-        }
-
-        // Assert
-        assert(!values.equals(gridValues));
-    }
-
-    @Test
-    public void CheckIfGenerateRandomGridGeneratesBetween0And8(){
-        // Arrange
-        BoardSize boardSize = new BoardSize(1,1);
-        Model model = new Model(boardSize);
-
-        // Act
-        ArrayList<Candy> generated = new ArrayList<>(model.GenerateRandomizedCandies());
-
-        // Assert
-        assert((generated.getFirst().getColor()) >= 0 && (generated.getFirst().getColor()) <= 8);
-    }
-
-    @Test
-    public void TestCombinationMadeWithHardCodedGrid(){
-        // Arrange
-        BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
-
-        ArrayList<Integer> grid = new ArrayList<>();
-
-        grid.add(1); grid.add(5); grid.add(2); grid.add(3);
-        grid.add(1); grid.add(1); grid.add(1); grid.add(3);
-        grid.add(1); grid.add(4); grid.add(2); grid.add(2);
-        grid.add(3); grid.add(1); grid.add(1); grid.add(5);
-
-        String gridPosition = "2x1";
-
-        List<Position> HardcodedIndexes = new ArrayList<>();
-        HardcodedIndexes.add(Position.fromIndex(0,boardSize));
-        HardcodedIndexes.add(Position.fromIndex(5,boardSize));
-        HardcodedIndexes.add(Position.fromIndex(8,boardSize));
-
-        // Act
-        Iterable<Position> neighboursIndexesIterable = model.CombinationMade(grid,gridPosition);
-
-        // Assert
-        assert(Objects.equals(HardcodedIndexes.toString(), neighboursIndexesIterable.toString()));
     }
 
     @Test
