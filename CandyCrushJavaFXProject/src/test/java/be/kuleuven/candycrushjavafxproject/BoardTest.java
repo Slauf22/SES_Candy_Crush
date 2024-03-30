@@ -32,7 +32,7 @@ public class BoardTest {
     }
 
     @Test
-    public void copyBoardAndCompateCellsCandies(){
+    public void copyBoardAndCompareCellsCandies(){
         BoardSize boardSize = new BoardSize(4,4);
         Board<Candy> board = new Board<>(boardSize);
 
