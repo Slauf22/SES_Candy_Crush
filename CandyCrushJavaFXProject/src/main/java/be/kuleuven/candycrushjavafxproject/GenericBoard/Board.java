@@ -4,16 +4,13 @@ import be.kuleuven.candycrushjavafxproject.BoardSize;
 import be.kuleuven.candycrushjavafxproject.Position;
 import javafx.geometry.Pos;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 public class Board <T>{
 
     private final HashMap<Position, T> positionToCellMap;
-    private HashMap<T, Set<Position>> cellToPositionMap;
+    private final HashMap<T, Set<Position>> cellToPositionMap;
     private final int rows;
     private final int cols;
     private final BoardSize boardSize;
@@ -30,7 +27,7 @@ public class Board <T>{
     public T getCellAt(Position position){
         return positionToCellMap.get(position);
     }
-
+    
     public void replaceCellAt(Position position,T newCell){
         T oldCell = positionToCellMap.get(position);
 
@@ -80,4 +77,7 @@ public class Board <T>{
         otherBoard.cellToPositionMap.putAll(this.cellToPositionMap);
     }
 
+    public Set<Position> getPositionsOfElement(T cell){
+        return Collections.unmodifiableSet(cellToPositionMap.get(cell));
+    }
 }

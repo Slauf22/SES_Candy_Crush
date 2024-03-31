@@ -1,12 +1,15 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.candycrushjavafxproject.Candies.Candy;
+import be.kuleuven.candycrushjavafxproject.Candies.borderDeleteCandy;
 import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
 import be.kuleuven.candycrushjavafxproject.Candies.rowDeleteCandy;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 
 public class BoardTest {
@@ -60,6 +63,33 @@ public class BoardTest {
         }
 
         assert(same);
+    }
+
+    @Test
+    public void testGetPositionsOfElement(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> board = new Board<>(boardSize);
+
+        Function<Position, Candy> cellCreator = position -> {
+            if (position.isLastColumn()){
+                return new borderDeleteCandy(7);
+            }
+            else {
+                return new normalCandy(1);
+            }
+        };
+
+        board.fill(cellCreator);
+
+        Set<Position> returnedPositionSet = board.getPositionsOfElement(new borderDeleteCandy(7));
+        Set<Position> expectedPositionSet = new HashSet<>();
+
+        expectedPositionSet.add(Position.fromIndex(3,boardSize));
+        expectedPositionSet.add(Position.fromIndex(7,boardSize));
+        expectedPositionSet.add(Position.fromIndex(11,boardSize));
+        expectedPositionSet.add(Position.fromIndex(15,boardSize));
+
+        assert(returnedPositionSet.equals(expectedPositionSet));
     }
 
 }
