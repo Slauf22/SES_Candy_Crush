@@ -14,7 +14,7 @@ public class ModelTest {
     public void IncreaseUserScoreTests(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
 
         // Act
         model.IncreaseScore(5);
@@ -29,7 +29,7 @@ public class ModelTest {
     public void CheckIfInitialScoreIs0Test(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
 
         // Act
         int score = model.getUserScore();
@@ -42,7 +42,7 @@ public class ModelTest {
     public void ModelContructorSetHeightTest(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);;
+        Model model = new Model(boardSize,null);
 
         // Act
         int height = model.getHeight();
@@ -55,7 +55,7 @@ public class ModelTest {
     public void ModelContructorSetWidthTest(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
 
         // Act
         int width = model.getWidth();
@@ -68,7 +68,7 @@ public class ModelTest {
     public void SetNameTest(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
 
         // Act
         model.setPlayerName("Rauf");
@@ -81,7 +81,7 @@ public class ModelTest {
     public void IncreaseScoreInMultipleOccassions(){
         // Arrange
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
 
         // Act
         model.IncreaseScore(5);
@@ -98,7 +98,7 @@ public class ModelTest {
     @Test
     public void firstTwoHaveCandyTestWithPositionWithOneLeftShouldFalse(){
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
         Position position = Position.fromIndex(5, boardSize);
 
         Candy normalCandy = new normalCandy(2);
@@ -113,7 +113,7 @@ public class ModelTest {
     @Test
     public void firstTwoHaveCandyTestWithBoardDefinedSoReturnTrue(){
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize,null);
         Position position = Position.fromIndex(6, boardSize);
 
         Candy normalCandy = new normalCandy(2);
