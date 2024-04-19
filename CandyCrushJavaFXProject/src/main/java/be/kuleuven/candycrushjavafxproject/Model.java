@@ -19,13 +19,14 @@ public class Model {
     private int userScore = 0;
     private String PlayerName;
     private final BoardSize boardSize;
-
+    private final Board<Candy> candyBoard;
     ///////////////
     //Constructor//
     ///////////////
 
-    public Model(BoardSize boardSize) {
+    public Model(BoardSize boardSize, Board<Candy> candyBoard) {
         this.boardSize = boardSize;
+        this.candyBoard = candyBoard;
     }
 
     ///////////////////////
@@ -88,7 +89,7 @@ public class Model {
         userScore += value;
     }
 
-    public Iterable<Position> getSameNeighbourPositions(Position position, Board<Candy> candyBoard){
+    public Iterable<Position> getSameNeighbourPositions(Position position){
 
         //Find the row of the index
         int indexRow = position.row();

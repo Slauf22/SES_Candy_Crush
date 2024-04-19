@@ -10,7 +10,7 @@ public class MultithreadingClient {
     public static void main(String[] args) {
         BoardSize boardSize = new BoardSize(4,4);
         Board<Candy> board = new Board<>(boardSize);
-        Model model = new Model(boardSize);
+        Model model = new Model(boardSize, board);
 
         Function<Position, Candy> cellCreator = position -> {
             return model.GenerateRandomCandy();

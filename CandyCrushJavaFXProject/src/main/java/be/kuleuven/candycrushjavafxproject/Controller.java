@@ -56,7 +56,7 @@ public class Controller extends Application {
     {
         boardSize = new BoardSize(4,4);
         candyBoard = new Board<>(boardSize);
-        model = new Model(boardSize);
+        model = new Model(boardSize, candyBoard);
         view = new View();
     }
 
@@ -122,7 +122,7 @@ public class Controller extends Application {
         String gridPosition = nodeClicked.getId().substring(3);
         Position pressedLabelPosition = model.RxCToPosition(gridPosition);
 
-        Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition,candyBoard);
+        Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition);
 
         if (neighoursPositions == null)
         {
