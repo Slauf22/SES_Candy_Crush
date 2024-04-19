@@ -5,7 +5,10 @@ import be.kuleuven.candycrushjavafxproject.Candies.*;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Model {
 
@@ -16,7 +19,6 @@ public class Model {
     private int userScore = 0;
     private String PlayerName;
     private final BoardSize boardSize;
-    private Board<Candy> board;
 
     ///////////////
     //Constructor//
@@ -133,5 +135,17 @@ public class Model {
         }
 
         return neighbours;
+    }
+
+    boolean firstTwoHaveCandy(Candy candy, Stream<Position> positions){
+        List<Position> positionList = positions.toList();
+
+        if (positionList.size() < 2){
+            return false;
+        }
+
+        //long nMatches = positionList.stream().filter(position -> board.getCellAt(position) == candy).count();
+        return true;
+        //return nMatches >= 2;
     }
 }

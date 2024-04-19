@@ -46,7 +46,7 @@ public class Controller extends Application {
     private final Model model;
     private final View view;
     private final BoardSize boardSize;
-    private Board<Candy> candyBoard;
+    private final Board<Candy> candyBoard;
 
     ///////////////
     //Constructor//
@@ -55,9 +55,9 @@ public class Controller extends Application {
     public Controller()
     {
         boardSize = new BoardSize(4,4);
+        candyBoard = new Board<>(boardSize);
         model = new Model(boardSize);
         view = new View();
-        candyBoard = new Board<>(boardSize);
     }
 
     ////////////////////

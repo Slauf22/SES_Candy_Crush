@@ -1,10 +1,11 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.candycrushjavafxproject.Candies.Candy;
+import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -92,5 +93,35 @@ public class ModelTest {
 
         // Assert
         assert(score1 == 5 && score2 == 9 && score3 == 10);
+    }
+
+    @Test
+    public void firstTwoHaveCandyTestWithPositionWithOneLeftShouldFalse(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
+        Position position = Position.fromIndex(5, boardSize);
+
+        Candy normalCandy = new normalCandy(2);
+
+        Stream<Position> PositionsLeft = position.walkLeft();
+
+        boolean result = model.firstTwoHaveCandy(normalCandy, PositionsLeft);
+
+        assert (!result);
+    }
+
+    @Test
+    public void firstTwoHaveCandyTestWithBoardDefinedSoReturnTrue(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Model model = new Model(boardSize);
+        Position position = Position.fromIndex(6, boardSize);
+
+        Candy normalCandy = new normalCandy(2);
+
+        Stream<Position> PositionsLeft = position.walkLeft();
+
+        boolean result = model.firstTwoHaveCandy(normalCandy, PositionsLeft);
+
+        System.out.println(result);
     }
 }

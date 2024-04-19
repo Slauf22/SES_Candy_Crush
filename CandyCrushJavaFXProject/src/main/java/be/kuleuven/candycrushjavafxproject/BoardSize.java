@@ -3,6 +3,8 @@ package be.kuleuven.candycrushjavafxproject;
 import javafx.geometry.Pos;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public record BoardSize(int rows, int cols) {
     public BoardSize {
@@ -11,7 +13,7 @@ public record BoardSize(int rows, int cols) {
         }
     }
     
-    public Iterable<Position> positions(){
+    public Collection<Position> positions(){
         ArrayList<Position> positions = new ArrayList<Position>();
 
         for (int row = 1; row <= rows; row++){

@@ -1,8 +1,10 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.CheckNeighboursInGrid;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public record Position(int row, int col, BoardSize boardSize) {
     public Position {
@@ -80,5 +82,25 @@ public record Position(int row, int col, BoardSize boardSize) {
 
     public boolean isLastColumn(){
         return col == boardSize.cols();
+    }
+
+    public Stream<Position> walkLeft(){
+        return Stream.iterate(this, pos -> new Position(pos.row(), pos.col() - 1, this.boardSize()))
+                .limit(col - 1);
+    }
+
+    public Stream<Position> walkRight(){
+        return Stream.iterate(this, pos -> new Position(pos.row(), pos.col() + 1, this.boardSize()))
+                .limit(col + 1);
+    }
+
+    public Stream<Position> walkUp(){
+        return Stream.iterate(this, pos -> new Position(pos.row() - 1, pos.col(), this.boardSize()))
+                .limit(row - 1);
+    }
+
+    public Stream<Position> walkDown(){
+        return Stream.iterate(this, pos -> new Position(pos.row() + 1, pos.col(), this.boardSize()))
+                .limit(row + 1);
     }
 }
