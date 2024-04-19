@@ -2,7 +2,6 @@ package be.kuleuven.candycrushjavafxproject.GenericBoard;
 
 import be.kuleuven.candycrushjavafxproject.BoardSize;
 import be.kuleuven.candycrushjavafxproject.Position;
-import javafx.geometry.Pos;
 
 import java.util.*;
 import java.util.function.Function;
@@ -24,11 +23,11 @@ public class Board <T>{
         this.boardSize = boardSize;
     }
 
-    public T getCellAt(Position position){
+    public synchronized T getCellAt(Position position){
         return positionToCellMap.get(position);
     }
     
-    public void replaceCellAt(Position position,T newCell){
+    public synchronized void replaceCellAt(Position position,T newCell){
         T oldCell = positionToCellMap.get(position);
 
         positionToCellMap.put(position, newCell);
@@ -49,7 +48,7 @@ public class Board <T>{
         cellToPositionMap.put(newCell, positions);
     }
 
-    public void fill(Function<Position, T> cellCreator){
+    public synchronized void fill(Function<Position, T> cellCreator){
         positionToCellMap.clear();
 
         for (int i = 0; i < rows; i++){
@@ -67,7 +66,7 @@ public class Board <T>{
         }
     }
 
-    public void copyTo(Board<T> otherBoard) {
+    public synchronized void copyTo(Board<T> otherBoard) {
         if (otherBoard.cols != this.cols || otherBoard.rows != this.rows) {
             throw new IllegalArgumentException("The dimensions of the current grid and the received grid are not the same.");
         }
@@ -77,7 +76,7 @@ public class Board <T>{
         otherBoard.cellToPositionMap.putAll(this.cellToPositionMap);
     }
 
-    public Set<Position> getPositionsOfElement(T cell){
+    public synchronized Set<Position> getPositionsOfElement(T cell){
         return Collections.unmodifiableSet(cellToPositionMap.get(cell));
     }
 }
