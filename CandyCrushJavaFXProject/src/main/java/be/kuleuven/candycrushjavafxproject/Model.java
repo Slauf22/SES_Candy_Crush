@@ -145,8 +145,8 @@ public class Model {
             return false;
         }
 
-        //long nMatches = positionList.stream().filter(position -> board.getCellAt(position) == candy).count();
-        return true;
-        //return nMatches >= 2;
+        long nMatches = positionList.stream().filter(position -> candyBoard.getCellAt(position).getColor() == candy.getColor()).count();
+
+        return nMatches >= 2;
     }
 }

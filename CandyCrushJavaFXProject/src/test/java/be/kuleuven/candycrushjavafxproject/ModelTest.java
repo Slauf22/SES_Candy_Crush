@@ -2,9 +2,11 @@ package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.candycrushjavafxproject.Candies.Candy;
 import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
+import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -113,8 +115,19 @@ public class ModelTest {
     @Test
     public void firstTwoHaveCandyTestWithBoardDefinedSoReturnTrue(){
         BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize,null);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
         Position position = Position.fromIndex(6, boardSize);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            if (pos.toIndex() == 5 || pos.toIndex() == 6){
+                return new normalCandy(2);
+            }
+            else {
+                return new normalCandy(1);
+            }
+        };
+        candyBoard.fill(cellCreator);
 
         Candy normalCandy = new normalCandy(2);
 
@@ -122,6 +135,6 @@ public class ModelTest {
 
         boolean result = model.firstTwoHaveCandy(normalCandy, PositionsLeft);
 
-        System.out.println(result);
+        assert(result);
     }
 }
