@@ -142,10 +142,10 @@ public class ModelTest {
         BoardSize boardSize = new BoardSize(4,4);
         Board<Candy> candyBoard = new Board<>(boardSize);
         Model model = new Model(boardSize,candyBoard);
-        Position position = Position.fromIndex(6, boardSize);
+        Position position = Position.fromIndex(7, boardSize);
 
         Function<Position, Candy> cellCreator = pos -> {
-            if (pos.toIndex() == 5 || pos.toIndex() == 6){
+            if (pos.toIndex() == 6 || pos.toIndex() == 7){
                 return new normalCandy(2);
             }
             else {
