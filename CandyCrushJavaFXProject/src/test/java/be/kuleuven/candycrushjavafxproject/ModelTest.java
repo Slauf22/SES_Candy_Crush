@@ -6,6 +6,7 @@ import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -110,6 +111,30 @@ public class ModelTest {
         boolean result = model.firstTwoHaveCandy(normalCandy, PositionsLeft);
 
         assert (!result);
+    }
+
+    @Test
+    public void testWalkLeftReturnedStream(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+        Position position = Position.fromIndex(6, boardSize);
+
+        List<Position> lst = position.walkLeft().toList();
+
+        assert(lst.size() == 3);
+    }
+
+    @Test
+    public void testWalkUpReturnedStream(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+        Position position = Position.fromIndex(6, boardSize);
+
+        List<Position> lst = position.walkUp().toList();
+
+        assert(lst.size() == 2);
     }
 
     @Test

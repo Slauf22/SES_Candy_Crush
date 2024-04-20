@@ -86,21 +86,21 @@ public record Position(int row, int col, BoardSize boardSize) {
 
     public Stream<Position> walkLeft(){
         return Stream.iterate(this, pos -> new Position(pos.row(), pos.col() - 1, this.boardSize()))
-                .limit(col - 1);
+                .limit(col);
     }
 
     public Stream<Position> walkRight(){
         return Stream.iterate(this, pos -> new Position(pos.row(), pos.col() + 1, this.boardSize()))
-                .limit(col + 1);
+                .limit(col);
     }
 
     public Stream<Position> walkUp(){
         return Stream.iterate(this, pos -> new Position(pos.row() - 1, pos.col(), this.boardSize()))
-                .limit(row - 1);
+                .limit(row);
     }
 
     public Stream<Position> walkDown(){
         return Stream.iterate(this, pos -> new Position(pos.row() + 1, pos.col(), this.boardSize()))
-                .limit(row + 1);
+                .limit(row);
     }
 }
