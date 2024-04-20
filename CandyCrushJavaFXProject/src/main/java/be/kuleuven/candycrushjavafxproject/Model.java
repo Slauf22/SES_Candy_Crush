@@ -163,4 +163,15 @@ public class Model {
 
         return lst;
     }
+
+    List<Position> longestMatchDown(Position pos){
+        Stream<Position> rightPositions = pos.walkDown();
+
+        Candy currentCandy = candyBoard.getCellAt(pos);
+        List<Position> lst = rightPositions
+                .takeWhile(position -> candyBoard.getCellAt(position).getColor() == currentCandy.getColor())
+                .toList();
+
+        return lst;
+    }
 }

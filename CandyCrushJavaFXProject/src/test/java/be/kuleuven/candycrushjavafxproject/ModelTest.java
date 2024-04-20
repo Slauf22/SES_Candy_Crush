@@ -182,4 +182,25 @@ public class ModelTest {
 
         assert(lst.size() == 3);
     }
+
+    @Test
+    public void LongestMatchDownFunctionTesting(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+        Position position = Position.fromIndex(4, boardSize);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            if (pos.toIndex() == 4 || pos.toIndex() == 8){
+                return new normalCandy(2);
+            }
+            else
+                return new normalCandy(1);
+        };
+        candyBoard.fill(cellCreator);
+
+        List<Position> lst = model.longestMatchDown(position);
+
+        assert(lst.size() == 2);
+    }
 }
