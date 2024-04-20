@@ -152,4 +152,15 @@ public class Model {
 
         return nMatches >= 2;
     }
+
+    List<Position> longestMatchToRight(Position pos){
+        Stream<Position> rightPositions = pos.walkRight();
+
+        Candy currentCandy = candyBoard.getCellAt(pos);
+        List<Position> lst = rightPositions
+                .takeWhile(position -> candyBoard.getCellAt(position).getColor() == currentCandy.getColor())
+                .toList();
+
+        return lst;
+    }
 }

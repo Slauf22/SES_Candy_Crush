@@ -162,4 +162,24 @@ public class ModelTest {
 
         assert(result);
     }
+
+    @Test
+    public void LongestMatchRightFunctionTesting(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+        Position position = Position.fromIndex(4, boardSize);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            if (pos.toIndex() == 4 || pos.toIndex() == 5 || pos.toIndex() == 6)
+                return new normalCandy(2);
+            else
+                return new normalCandy(1);
+        };
+        candyBoard.fill(cellCreator);
+
+        List<Position> lst = model.longestMatchToRight(position);
+
+        assert(lst.size() == 3);
+    }
 }
