@@ -3,6 +3,7 @@ package be.kuleuven.candycrushjavafxproject;
 import be.kuleuven.CheckNeighboursInGrid;
 import be.kuleuven.candycrushjavafxproject.Candies.*;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -173,5 +174,30 @@ public class Model {
                 .toList();
 
         return lst;
+    }
+
+    Stream<Position> horizontalStartingPositions(){
+        List<Position> positionList = new ArrayList<>();
+        Position currentPosition;
+        Candy currentCandy;
+
+        for (int i = 0; i < boardSize.rows()*boardSize.cols(); i++){
+            currentPosition = Position.fromIndex(i,boardSize);
+            List<Position> positionsLeft = currentPosition.walkLeft().toList();
+
+            // No combinations possible
+            if (positionsLeft.size() < 2){
+                continue;
+            }
+
+            currentCandy = candyBoard.getCellAt(currentPosition);
+            Stream<Position> positionsStream = positionsLeft.stream();
+
+            if (!firstTwoHaveCandy(currentCandy, positionsStream)){
+                positionList.add(currentPosition);
+            }
+        }
+
+        return positionList.stream();
     }
 }

@@ -6,6 +6,9 @@ import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -202,5 +205,31 @@ public class ModelTest {
         List<Position> lst = model.longestMatchDown(position);
 
         assert(lst.size() == 2);
+    }
+
+    @Test
+    public void horizontalStartingPositionsTest(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            if (pos.toIndex() % 2 == 0){
+                return new normalCandy(1);
+            }
+            else {
+                return new normalCandy(2);
+            }
+        };
+        candyBoard.fill(cellCreator);
+
+        Stream<Position> stream = model.horizontalStartingPositions();
+        List<Integer> correctIndexes = new ArrayList<>(Arrays.asList(1,2,3,5,6,7,9,10,11,13,14,15));
+
+        List<Integer> indices = stream.map(Position::toIndex)
+                .filter(index -> (index >= 1 && index <= 3) || (index >= 5 && index <= 7) || (index >= 9 && index <= 11) || (index >= 13 && index <= 15))
+                .toList();
+
+        assert(indices.equals(correctIndexes));
     }
 }
