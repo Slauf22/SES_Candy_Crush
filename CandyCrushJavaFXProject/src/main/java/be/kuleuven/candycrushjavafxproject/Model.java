@@ -185,13 +185,40 @@ public class Model {
             currentPosition = Position.fromIndex(i,boardSize);
             List<Position> positionsLeft = currentPosition.walkLeft().toList();
 
-            // No combinations possible
+            // Only enters when candy is on first column
             if (positionsLeft.size() < 2){
+                positionList.add(currentPosition);
                 continue;
             }
 
             currentCandy = candyBoard.getCellAt(currentPosition);
             Stream<Position> positionsStream = positionsLeft.stream();
+
+            if (!firstTwoHaveCandy(currentCandy, positionsStream)){
+                positionList.add(currentPosition);
+            }
+        }
+
+        return positionList.stream();
+    }
+
+    Stream<Position> verticalStartingPositions(){
+        List<Position> positionList = new ArrayList<>();
+        Position currentPosition;
+        Candy currentCandy;
+
+        for (int i = 0; i < boardSize.rows()*boardSize.cols(); i++){
+            currentPosition = Position.fromIndex(i,boardSize);
+            List<Position> positionsUp = currentPosition.walkUp().toList();
+
+            // No combinations possible
+            if (positionsUp.size() < 2){
+                positionList.add(currentPosition);
+                continue;
+            }
+
+            currentCandy = candyBoard.getCellAt(currentPosition);
+            Stream<Position> positionsStream = positionsUp.stream();
 
             if (!firstTwoHaveCandy(currentCandy, positionsStream)){
                 positionList.add(currentPosition);
