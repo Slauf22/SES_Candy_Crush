@@ -5,9 +5,7 @@ import be.kuleuven.candycrushjavafxproject.Candies.*;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -226,5 +224,24 @@ public class Model {
         }
 
         return positionList.stream();
+    }
+
+    Set<List<Position>> findAllMatches(){
+        Stream<Position> verticalStream = verticalStartingPositions();
+        Stream<Position> horizontalStream = horizontalStartingPositions();
+
+        Set<List<Position>> matches = new HashSet<>();;
+
+        matches.addAll(verticalStream
+                .map(position -> longestMatchDown(position))
+                .filter(positions -> positions.size() >= 3)
+                .collect(Collectors.toSet()));
+
+        matches.addAll(horizontalStream
+                .map(position -> longestMatchToRight(position))
+                .filter(positions -> positions.size() >= 3)
+                .collect(Collectors.toSet()));
+
+        return matches;
     }
 }

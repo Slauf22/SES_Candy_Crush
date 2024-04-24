@@ -10,6 +10,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -214,17 +215,40 @@ public class ModelTest {
         Model model = new Model(boardSize,candyBoard);
 
         Function<Position, Candy> cellCreator = pos -> {
-            if (pos.col() == 1 || pos.col() == 4){
+            if(pos.toIndex() == 0 || pos.toIndex() == 4 || pos.toIndex() == 8 || pos.toIndex() == 12
+                    || pos.toIndex() == 1 || pos.toIndex() == 5 || pos.toIndex() == 9 || pos.toIndex() == 13) {
                 return new normalCandy(1);
             }
-            else
+            else {
                 return new normalCandy(2);
+            }
         };
         candyBoard.fill(cellCreator);
 
         Stream<Position> stream = model.horizontalStartingPositions();
-        List<Integer> correctIndexes = new ArrayList<>(Arrays.asList(0,1,3,4,5,7,8,9,11,12,13,15));
 
         System.out.println(stream.toList());
+    }
+
+    @Test
+    public void findAllMatchesTest(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            if(pos.toIndex()%2 == 0){
+                return new normalCandy(1);
+            }
+            else {
+                return new normalCandy(2);
+            }
+        };
+
+        candyBoard.fill(cellCreator);
+
+        Set<List<Position>> matches = model.findAllMatches();
+
+        System.out.println(matches.size());
     }
 }
