@@ -244,4 +244,23 @@ public class Model {
 
         return matches;
     }
+
+    void clearMatch(List<Position> match){
+        if (match.isEmpty()) return;
+
+        // normal cnady color 99 is clear candy
+        candyBoard.replaceCellAt(match.get(0),new normalCandy(99));
+        clearMatch(match.subList(1,match.size()));
+    }
+
+    void fallDownTo(Position position){
+        if (position.row() == 1){
+            return;
+        }
+
+        while (true){
+            //wat is een cleared candy in cnadyboard
+        }
+    }
 }
+

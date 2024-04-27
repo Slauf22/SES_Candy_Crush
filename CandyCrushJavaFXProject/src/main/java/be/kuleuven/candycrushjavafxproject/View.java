@@ -123,6 +123,16 @@ public class View{
                 rectangle.setWidth(rectWidth);
                 node = rectangle;
                 break;
+
+            //borderDeleteCandy
+            case 99:
+                rectangle = new Rectangle();
+                rectangle.setFill(Color.CYAN);
+                rectangle.setHeight(rectHeight);
+                rectangle.setWidth(rectWidth);
+                rectangle.setOpacity(0.0);
+                node = rectangle;
+                break;
         }
 
         if (node == null) {throw new NullPointerException();}

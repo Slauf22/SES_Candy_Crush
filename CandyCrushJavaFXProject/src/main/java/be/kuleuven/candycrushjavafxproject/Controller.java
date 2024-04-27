@@ -122,6 +122,11 @@ public class Controller extends Application {
         String gridPosition = nodeClicked.getId().substring(3);
         Position pressedLabelPosition = model.RxCToPosition(gridPosition);
 
+        if (candyBoard.getCellAt(pressedLabelPosition).getColor() == 99)
+        {
+            return;
+        }
+
         Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition);
 
         if (neighoursPositions == null)
