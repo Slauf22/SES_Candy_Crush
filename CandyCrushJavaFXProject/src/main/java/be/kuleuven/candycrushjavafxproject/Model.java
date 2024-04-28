@@ -167,6 +167,7 @@ public class Model {
         Stream<Position> rightPositions = pos.walkDown();
 
         Candy currentCandy = candyBoard.getCellAt(pos);
+
         List<Position> lst = rightPositions
                 .takeWhile(position -> candyBoard.getCellAt(position).getColor() == currentCandy.getColor())
                 .toList();
@@ -282,6 +283,73 @@ public class Model {
                 break;
             }
         }
+    }
+
+    boolean updateBoard(){
+        printBoard();
+
+        Set<List<Position>> matches = findAllMatches().stream()
+                .filter(match -> candyBoard.getCellAt(match.getFirst()).getColor() != 99)
+                .collect(Collectors.toSet());
+
+        if (matches.isEmpty()){
+            return false;
+        }
+
+        Iterator<List<Position>> matchesIterator = matches.iterator();
+
+        // Eerst 1 clear dan die geclearde laten vallen
+//        while (matchesIterator.hasNext()){
+//            List<Position> match = matchesIterator.next();
+//            clearMatch(match);
+//
+//            Iterator<Position> positionIterator = match.iterator();
+//            while (positionIterator.hasNext()){
+//                fallDownTo(positionIterator.next());
+//            }
+//        }
+
+        // Eerst alles clearen dan alles laten vallen
+        while (matchesIterator.hasNext()){
+            List<Position> match = matchesIterator.next();
+            clearMatch(match);
+        }
+        matchesIterator = matches.iterator();
+        while (matchesIterator.hasNext()){
+            List<Position> match = matchesIterator.next();
+            Iterator<Position> positionIterator = match.iterator();
+            while (positionIterator.hasNext()){
+                fallDownTo(positionIterator.next());
+            }
+        }
+
+        updateBoard();
+
+        return true;
+    }
+
+    void printBoard(){
+        System.out.println("Board");
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(0,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(1,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(2,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(3,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(4,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(5,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(6,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(7,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(8,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(9,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(10,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(11,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(12,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(13,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(14,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(15,boardSize)));
     }
 }
 

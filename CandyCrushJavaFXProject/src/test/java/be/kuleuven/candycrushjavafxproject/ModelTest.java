@@ -7,10 +7,7 @@ import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -255,27 +252,7 @@ public class ModelTest {
 
         candyBoard.fill(cellCreator);
 
-        System.out.println("Board");
-
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(0,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(1,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(2,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(3,boardSize)));
-
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(4,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(5,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(6,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(7,boardSize)));
-
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(8,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(9,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(10,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(11,boardSize)));
-
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(12,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(13,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(14,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(15,boardSize)));
+        model.printBoard();
 
         model.fallDownTo(Position.fromIndex(12,boardSize));
         model.fallDownTo(Position.fromIndex(13,boardSize));
@@ -284,24 +261,32 @@ public class ModelTest {
 
         System.out.println("After fall down");
 
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(0,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(1,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(2,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(3,boardSize)));
+        model.printBoard();
+    }
 
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(4,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(5,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(6,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(7,boardSize)));
+    @Test
+    public void updateBoardTest(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
 
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(8,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(9,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(10,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(11,boardSize)));
+        Function<Position, Candy> cellCreator = pos -> {
+            Random random = new Random();
+            return new normalCandy(random.nextInt(2));
+//            if (pos.toIndex() == 2 || pos.toIndex() == 3 || pos.toIndex() == 4 || pos.toIndex() == 5 || pos.toIndex() == 6 ||pos.toIndex() == 8 ||pos.toIndex() == 11 ||pos.toIndex() == 15){
+//                return new normalCandy(0);
+//            }
+//            else return new normalCandy(2);
+        };
 
-        System.out.println(candyBoard.getCellAt(Position.fromIndex(12,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(13,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(14,boardSize)) + " " +
-                candyBoard.getCellAt(Position.fromIndex(15,boardSize)));
+        candyBoard.fill(cellCreator);
+
+        System.out.println("Initial board");
+//        model.printBoard();
+
+        model.updateBoard();
+
+        System.out.println("After updates");
+        model.printBoard();
     }
 }
