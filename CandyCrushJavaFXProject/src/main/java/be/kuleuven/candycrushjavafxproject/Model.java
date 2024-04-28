@@ -254,12 +254,33 @@ public class Model {
     }
 
     void fallDownTo(Position position){
+        // Passed position msut be empty candy
+        if (candyBoard.getCellAt(position).getColor() != 99){
+            return;
+        }
+
         if (position.row() == 1){
             return;
         }
 
-        while (true){
-            //wat is een cleared candy in cnadyboard
+        Position p = new Position(position.row()-1, position.col(), boardSize);
+
+        while (p.row() >= 1){
+            //If not empty candy
+            if (candyBoard.getCellAt(p).getColor() != 99)
+            {
+                candyBoard.replaceCellAt(position, candyBoard.getCellAt(p));
+                candyBoard.replaceCellAt(p, new normalCandy(99));
+
+                fallDownTo(new Position(position.row()-1, position.col(), boardSize));
+                break;
+            }
+
+            if (p.row() > 1) {
+                p = new Position(p.row() - 1, p.col(), boardSize);
+            }else{
+                break;
+            }
         }
     }
 }

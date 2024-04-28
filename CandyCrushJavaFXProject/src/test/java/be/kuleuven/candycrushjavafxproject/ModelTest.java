@@ -251,4 +251,72 @@ public class ModelTest {
 
         System.out.println(matches.size());
     }
+
+    @Test
+    public void fallDownToTest(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            if (pos.toIndex() == 0 || pos.toIndex() == 1 || pos.toIndex() == 3 || pos.toIndex() == 5 || pos.toIndex() == 6 ||
+                    pos.toIndex() == 8 || pos.toIndex() ==  10){
+                return new normalCandy(1);
+            }
+            else {
+                return new normalCandy(99);
+            }
+        };
+
+        candyBoard.fill(cellCreator);
+
+        System.out.println("Board");
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(0,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(1,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(2,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(3,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(4,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(5,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(6,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(7,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(8,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(9,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(10,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(11,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(12,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(13,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(14,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(15,boardSize)));
+
+        model.fallDownTo(Position.fromIndex(12,boardSize));
+        model.fallDownTo(Position.fromIndex(13,boardSize));
+        model.fallDownTo(Position.fromIndex(14,boardSize));
+        model.fallDownTo(Position.fromIndex(15,boardSize));
+
+        System.out.println("After fall down");
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(0,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(1,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(2,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(3,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(4,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(5,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(6,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(7,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(8,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(9,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(10,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(11,boardSize)));
+
+        System.out.println(candyBoard.getCellAt(Position.fromIndex(12,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(13,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(14,boardSize)) + " " +
+                candyBoard.getCellAt(Position.fromIndex(15,boardSize)));
+    }
 }

@@ -122,6 +122,7 @@ public class Controller extends Application {
         String gridPosition = nodeClicked.getId().substring(3);
         Position pressedLabelPosition = model.RxCToPosition(gridPosition);
 
+        // If pressed is a clear candy
         if (candyBoard.getCellAt(pressedLabelPosition).getColor() == 99)
         {
             return;
