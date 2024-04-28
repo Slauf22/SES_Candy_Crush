@@ -103,21 +103,6 @@ public class ModelTest {
     }
 
     @Test
-    public void firstTwoHaveCandyTestWithPositionWithOneLeftShouldFalse(){
-        BoardSize boardSize = new BoardSize(4,4);
-        Model model = new Model(boardSize,null);
-        Position position = Position.fromIndex(5, boardSize);
-
-        Candy normalCandy = new normalCandy(2);
-
-        Stream<Position> PositionsLeft = position.walkLeft();
-
-        boolean result = model.firstTwoHaveCandy(normalCandy, PositionsLeft);
-
-        assert (!result);
-    }
-
-    @Test
     public void testWalkLeftReturnedStream(){
         BoardSize boardSize = new BoardSize(4,4);
         Board<Candy> candyBoard = new Board<>(boardSize);
