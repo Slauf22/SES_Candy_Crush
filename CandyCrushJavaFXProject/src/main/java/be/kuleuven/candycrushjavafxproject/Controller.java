@@ -205,6 +205,11 @@ public class Controller extends Application {
 
         candyBoard.fill(cellCreator);
 
+        if (!model.findAllMatches().isEmpty())
+        {
+            GenerateGridNodes();
+        }
+
         updateGrid();
     }
 
