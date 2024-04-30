@@ -181,8 +181,7 @@ public class Controller extends Application {
             // If swap is possible
             if (candyBoard.swapTwoPositions(firstCandyPosition, secondCandyPosition)) {
 
-                // The swap hasnt lead to a match, meaning that its a false swap and i need to return the board to how it was.
-                System.out.println(model.findAllMatches().size());
+                // The swap hasnt lead to a match, meaning that its a false swap and i need to return the board to how it was.;
                 if (model.findAllMatches().isEmpty()){
                     backupBoard.copyTo(candyBoard);
                     return;
@@ -194,12 +193,15 @@ public class Controller extends Application {
                 nClicked = 0;
                 view.clearHighlights(highlightedNode);
 
+                // Set to null for selecting a original candy
+                highlightedNode = null;
+
+                // Update the board after a valid match
+                model.updateBoard();
+
                 // Update the grid in UI
                 removeGrid();
                 updateGrid();
-
-                // Set to null for selecting a original candy
-                highlightedNode = null;
             }
         }
     }
@@ -244,6 +246,12 @@ public class Controller extends Application {
     }
 
     private void removeGrid(){
+        if(highlightedNode != null) {
+            view.clearHighlights(highlightedNode);
+            highlightedNode = null;
+            nClicked = 0;
+        }
+
         ArrayList<String> idsToRemoveList = new ArrayList<>();
 
         for (int i = 1; i <= boardSize.rows(); i++) {

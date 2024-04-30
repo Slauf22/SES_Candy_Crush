@@ -235,11 +235,13 @@ public class Model {
         Set<List<Position>> matches = new HashSet<>();;
 
         matches.addAll(verticalStream
+                .filter(position -> candyBoard.getCellAt(position).getColor() != 99)
                 .map(position -> longestMatchDown(position))
                 .filter(positions -> positions.size() >= 3)
                 .collect(Collectors.toSet()));
 
         matches.addAll(horizontalStream
+                .filter(position -> candyBoard.getCellAt(position).getColor() != 99)
                 .map(position -> longestMatchToRight(position))
                 .filter(positions -> positions.size() >= 3)
                 .collect(Collectors.toSet()));

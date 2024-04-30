@@ -193,8 +193,6 @@ public class View{
         Node highlight = highlightedNode.getParent().lookup("#" + highlightedNode.getId() + "H");
         if (highlight != null) {
             ((Pane) highlightedNode.getParent()).getChildren().remove(highlight);
-        } else {
-            System.out.println("Node with ID " + highlightedNode + "H not found.");
         }
     }
 }
