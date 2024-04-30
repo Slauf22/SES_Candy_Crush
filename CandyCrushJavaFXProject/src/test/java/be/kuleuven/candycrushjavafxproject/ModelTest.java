@@ -252,16 +252,12 @@ public class ModelTest {
 
         candyBoard.fill(cellCreator);
 
-        model.printBoard();
-
         model.fallDownTo(Position.fromIndex(12,boardSize));
         model.fallDownTo(Position.fromIndex(13,boardSize));
         model.fallDownTo(Position.fromIndex(14,boardSize));
         model.fallDownTo(Position.fromIndex(15,boardSize));
 
         System.out.println("After fall down");
-
-        model.printBoard();
     }
 
     @Test
@@ -281,12 +277,6 @@ public class ModelTest {
 
         candyBoard.fill(cellCreator);
 
-        System.out.println("Initial board");
-//        model.printBoard();
-
         model.updateBoard();
-
-        System.out.println("After updates");
-        model.printBoard();
     }
 }

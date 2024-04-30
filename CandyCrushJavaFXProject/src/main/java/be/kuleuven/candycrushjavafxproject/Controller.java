@@ -14,11 +14,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -54,7 +56,7 @@ public class Controller extends Application {
 
     public Controller()
     {
-        boardSize = new BoardSize(4,4);
+        boardSize = new BoardSize(8,8);
         candyBoard = new Board<>(boardSize);
         model = new Model(boardSize, candyBoard);
         view = new View();
@@ -81,6 +83,15 @@ public class Controller extends Application {
         view.CreateGameWindow(stage, this);
 
         UpdateNameLabel();
+
+        ScoreLbl = new Label();
+        ScoreLbl.setText("Score: 0");
+        ScoreLbl.setId("ScoreLbl");
+        ScoreLbl.setLayoutY(213.0);
+        ScoreLbl.setLayoutX(414.0);
+        ScoreLbl.setFont(new Font(33.0));
+
+        pane.getChildren().add(ScoreLbl);
 
         GenerateGridNodes();
 
@@ -184,11 +195,22 @@ public class Controller extends Application {
     }
 
     private void updateGrid(){
+        List<Double> x_positions = new ArrayList<>();
+
         for (int i = 0; i < boardSize.cols()* boardSize.rows(); i++)
         {
             Position currentPosition = Position.fromIndex(i,boardSize);
-            pane.getChildren().add(view.makeCandyShape(currentPosition, candyBoard.getCellAt(currentPosition)));
+
+            Node shape = view.makeCandyShape(currentPosition, candyBoard.getCellAt(currentPosition));
+
+            pane.getChildren().add(shape);
+
+            x_positions.add(shape.getLayoutX());
         }
+
+        double largest_x = x_positions.stream().max(Double::compareTo).orElseThrow();
+
+        ScoreLbl.setLayoutX(largest_x + 60.0);
     }
 
     private void removeGrid(){

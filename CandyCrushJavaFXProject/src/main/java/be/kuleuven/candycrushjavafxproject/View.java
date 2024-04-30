@@ -7,10 +7,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,7 +53,7 @@ public class View{
         Scene scene = new Scene(fxmlLoader.load(), 632, 435);
 
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
     }
 
     Node makeCandyShape(Position position, Candy candy){
