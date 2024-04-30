@@ -151,9 +151,25 @@ public class Controller extends Application {
             view.highlightNode(nodeClicked);
             highlightedNode = nodeClicked;
         }
-
         // When you select the second, attempt a swap
         else {
+            // If pressed same node again, deselect that node
+            if (nodeClicked.equals(highlightedNode)){
+                // Clear the highlight
+                model.nodeToPosition(highlightedNode);
+
+                nClicked = 0;
+                view.clearHighlights(highlightedNode);
+
+                // Update the grid in UI
+                removeGrid();
+                updateGrid();
+
+                // Set to null for selecting a original candy
+                highlightedNode = null;
+
+                return;
+            }
 
             // Swap candies if possible
             Position firstCandyPosition = model.nodeToPosition(highlightedNode);

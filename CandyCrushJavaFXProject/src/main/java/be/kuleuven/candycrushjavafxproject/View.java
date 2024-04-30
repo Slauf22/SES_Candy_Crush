@@ -166,6 +166,7 @@ public class View{
             outlineCircle.setLayoutX(node.getLayoutX());
             outlineCircle.setLayoutY(node.getLayoutY());
             outlineCircle.setId(node.getId() + "H");
+            outlineCircle.setMouseTransparent(true);
 
             ((Pane) node.getParent()).getChildren().add(outlineCircle);
         }
@@ -179,6 +180,7 @@ public class View{
             outlineRectangle.setLayoutX(node.getLayoutX());
             outlineRectangle.setLayoutY(node.getLayoutY());
             outlineRectangle.setId(node.getId() + "H");
+            outlineRectangle.setMouseTransparent(true);
 
             ((Pane) node.getParent()).getChildren().add(outlineRectangle);
         }
