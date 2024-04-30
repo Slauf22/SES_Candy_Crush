@@ -123,7 +123,7 @@ public class Model {
             }
 
             //Update row and col of element in grid
-            if(colCounter == 4)
+            if(colCounter == boardSize.cols())
             {
                 colCounter = 1;
                 rowCounter++;

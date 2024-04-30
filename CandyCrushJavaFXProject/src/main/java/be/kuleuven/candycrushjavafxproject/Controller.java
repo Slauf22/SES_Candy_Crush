@@ -139,6 +139,8 @@ public class Controller extends Application {
             return;
         }
 
+        System.out.println("Pressed " + pressedLabelPosition.row() + pressedLabelPosition.col());
+
         Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition);
 
         if (neighoursPositions == null)
@@ -151,10 +153,13 @@ public class Controller extends Application {
         // Translate index back to RxC format
         for (Position i : neighoursPositions)
         {
+            System.out.println(i.row() + "-" + i.col());
             int r = i.toIndex()/ model.getHeight() + 1;
             int c = (i.toIndex() - (r-1)*model.getHeight()) + 1;
             neighboursGridPositionsArray.add(r + "x" + c);
         }
+
+        System.out.println(" ");
 
         //See if we have a combination with the neighbours
         if (neighboursGridPositionsArray.size() >= 2)
@@ -216,11 +221,13 @@ public class Controller extends Application {
     private void removeGrid(){
         ArrayList<String> idsToRemoveList = new ArrayList<>();
 
-        idsToRemoveList.add("lbl1x1");idsToRemoveList.add("lbl1x2");idsToRemoveList.add("lbl1x3");idsToRemoveList.add("lbl1x4");
-        idsToRemoveList.add("lbl2x1");idsToRemoveList.add("lbl2x2");idsToRemoveList.add("lbl2x3");idsToRemoveList.add("lbl2x4");
-        idsToRemoveList.add("lbl3x1");idsToRemoveList.add("lbl3x2");idsToRemoveList.add("lbl3x3");idsToRemoveList.add("lbl3x4");
-        idsToRemoveList.add("lbl4x1");idsToRemoveList.add("lbl4x2");idsToRemoveList.add("lbl4x3");idsToRemoveList.add("lbl4x4");
-
+        for (int i = 1; i <= boardSize.rows(); i++) {
+            for (int j = 1; j <= boardSize.cols(); j++) {
+                String id = "lbl" + i + "x" + j;
+                idsToRemoveList.add(id);
+            }
+        }
+        
         Iterator<Node> iterator = pane.getChildren().iterator();
 
         while (iterator.hasNext()) {
