@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -49,6 +51,8 @@ public class Controller extends Application {
     private final View view;
     private final BoardSize boardSize;
     private final Board<Candy> candyBoard;
+    private int nClicked;
+    private Node highlightedNode;
 
     ///////////////
     //Constructor//
@@ -60,6 +64,8 @@ public class Controller extends Application {
         candyBoard = new Board<>(boardSize);
         model = new Model(boardSize, candyBoard);
         view = new View();
+        nClicked = 0;
+        highlightedNode = null;
     }
 
     ////////////////////
@@ -139,49 +145,36 @@ public class Controller extends Application {
             return;
         }
 
-        System.out.println("Pressed " + pressedLabelPosition.row() + pressedLabelPosition.col());
-
-        Iterable<Position> neighoursPositions = model.getSameNeighbourPositions(pressedLabelPosition);
-
-        if (neighoursPositions == null)
-        {
-            return;
+        // When you select the first candy, highlight it
+        if (nClicked == 0){
+            nClicked++;
+            view.highlightNode(nodeClicked);
+            highlightedNode = nodeClicked;
         }
 
-        ArrayList<String> neighboursGridPositionsArray = new ArrayList<>();
+        // When you select the second, attempt a swap
+        else {
 
-        // Translate index back to RxC format
-        for (Position i : neighoursPositions)
-        {
-            System.out.println(i.row() + "-" + i.col());
-            int r = i.toIndex()/ model.getHeight() + 1;
-            int c = (i.toIndex() - (r-1)*model.getHeight()) + 1;
-            neighboursGridPositionsArray.add(r + "x" + c);
-        }
+            // Swap candies if possible
+            Position firstCandyPosition = model.nodeToPosition(highlightedNode);
+            Position secondCandyPosition = model.nodeToPosition(nodeClicked);
 
-        System.out.println(" ");
+            // If swap is possible
+            if (candyBoard.swapTwoPositions(firstCandyPosition, secondCandyPosition)) {
+                // Clear the highlight
+                model.nodeToPosition(highlightedNode);
 
-        //See if we have a combination with the neighbours
-        if (neighboursGridPositionsArray.size() >= 2)
-        {
-            //Replace neighbours by randoms
-            for (Position idx : neighoursPositions)
-            {
-                candyBoard.replaceCellAt(idx,model.GenerateRandomCandy());
+                nClicked = 0;
+                view.clearHighlights(highlightedNode);
+
+                // Update the grid in UI
+                removeGrid();
+                updateGrid();
+
+                // Set to null for selecting a original candy
+                highlightedNode = null;
             }
-
-            //Set clicked to random
-            candyBoard.replaceCellAt(model.RxCToPosition(gridPosition), model.GenerateRandomCandy());
-
-            //Update the grid
-            removeGrid();
-
-            updateGrid();
-
-            model.IncreaseScore(neighboursGridPositionsArray.size() + 1);
         }
-
-        ScoreLbl.setText("Score: " + model.getUserScore());
     }
 
     public void RestartButtonHandler() throws IOException {
@@ -227,7 +220,7 @@ public class Controller extends Application {
                 idsToRemoveList.add(id);
             }
         }
-        
+
         Iterator<Node> iterator = pane.getChildren().iterator();
 
         while (iterator.hasNext()) {

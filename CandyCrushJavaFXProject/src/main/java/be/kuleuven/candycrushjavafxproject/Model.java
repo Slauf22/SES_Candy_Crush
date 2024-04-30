@@ -4,6 +4,7 @@ import be.kuleuven.CheckNeighboursInGrid;
 import be.kuleuven.candycrushjavafxproject.Candies.*;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -313,6 +314,12 @@ public class Model {
         updateBoard();
 
         return true;
+    }
+
+    Position nodeToPosition(Node nodeOfCandy){
+        String idRxC = nodeOfCandy.getId().substring(3);
+
+        return new Position(((int) idRxC.charAt(0)) - 48, ((int) idRxC.charAt(2)) - 48,boardSize);
     }
 }
 

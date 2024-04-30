@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -24,9 +25,9 @@ public class View{
     //Member Variables//
     ////////////////////
 
-    private double circleRadius = 5;
-    private double rectHeight = 10;
-    private double rectWidth = 10;
+    private final double circleRadius = 5;
+    private final double rectHeight = 10;
+    private final double rectWidth = 10;
 
     private Controller controller;
 
@@ -94,7 +95,7 @@ public class View{
             //rowDeleteCandy
             case 4:
                 rectangle = new Rectangle();
-                rectangle.setFill(Color.BLACK);
+                rectangle.setFill(Color.YELLOW);
                 rectangle.setHeight(rectHeight);
                 rectangle.setWidth(rectWidth);
                 node = rectangle;
@@ -153,5 +154,45 @@ public class View{
         });
 
         return node;
+    }
+
+    public void highlightNode(Node node){
+        if (node instanceof Circle){
+            Circle outlineCircle = new Circle();
+            outlineCircle.setRadius(circleRadius);
+            outlineCircle.setStroke(Color.BLACK);
+            outlineCircle.setFill(Color.TRANSPARENT);
+            outlineCircle.setStrokeWidth(2);
+            outlineCircle.setLayoutX(node.getLayoutX());
+            outlineCircle.setLayoutY(node.getLayoutY());
+            outlineCircle.setId(node.getId() + "H");
+
+            ((Pane) node.getParent()).getChildren().add(outlineCircle);
+        }
+        else if (node instanceof Rectangle){
+            Rectangle outlineRectangle = new Rectangle();
+            outlineRectangle.setWidth(rectWidth);
+            outlineRectangle.setHeight(rectHeight);
+            outlineRectangle.setStroke(Color.BLACK);
+            outlineRectangle.setFill(Color.TRANSPARENT);
+            outlineRectangle.setStrokeWidth(2);
+            outlineRectangle.setLayoutX(node.getLayoutX());
+            outlineRectangle.setLayoutY(node.getLayoutY());
+            outlineRectangle.setId(node.getId() + "H");
+
+            ((Pane) node.getParent()).getChildren().add(outlineRectangle);
+        }
+        else {
+            throw new IllegalArgumentException("Node isnt a circle or rectangle");
+        }
+    }
+
+    public void clearHighlights(Node highlightedNode) {
+        Node highlight = highlightedNode.getParent().lookup("#" + highlightedNode.getId() + "H");
+        if (highlight != null) {
+            ((Pane) highlightedNode.getParent()).getChildren().remove(highlight);
+        } else {
+            System.out.println("Node with ID " + highlightedNode + "H not found.");
+        }
     }
 }

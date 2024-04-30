@@ -79,4 +79,13 @@ public class Board <T>{
     public synchronized Set<Position> getPositionsOfElement(T cell){
         return Collections.unmodifiableSet(cellToPositionMap.get(cell));
     }
+
+    public boolean swapTwoPositions(Position pos1, Position pos2){
+        if ((pos2.row() == pos1.row() - 1 && pos2.col() == pos1.col()) || (pos2.row() == pos1.row() + 1 && pos2.col() == pos1.col()) || (pos2.row() == pos1.row() && pos2.col() == pos1.col() - 1) || (pos2.row() == pos1.row() && pos2.col() == pos1.col() + 1)){
+            T temp = positionToCellMap.get(pos1);
+            positionToCellMap.put(pos1,positionToCellMap.get(pos2));
+            positionToCellMap.put(pos2, temp);
+            return true;
+        }else return false;
+    }
 }
