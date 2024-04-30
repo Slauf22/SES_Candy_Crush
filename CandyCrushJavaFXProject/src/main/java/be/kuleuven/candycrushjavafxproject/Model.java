@@ -252,6 +252,9 @@ public class Model {
     void clearMatch(List<Position> match){
         if (match.isEmpty()) return;
 
+        // Increase score
+        userScore++;
+
         // normal cnady color 99 is clear candy
         candyBoard.replaceCellAt(match.get(0),new normalCandy(99));
         clearMatch(match.subList(1,match.size()));

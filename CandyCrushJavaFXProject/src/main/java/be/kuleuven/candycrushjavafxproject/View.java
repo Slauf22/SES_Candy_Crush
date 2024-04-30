@@ -104,7 +104,7 @@ public class View{
             //extraMoveCandy
             case 5:
                 rectangle = new Rectangle();
-                rectangle.setFill(Color.DEEPSKYBLUE);
+                rectangle.setFill(Color.SIENNA);
                 rectangle.setHeight(rectHeight);
                 rectangle.setWidth(rectWidth);
                 node = rectangle;

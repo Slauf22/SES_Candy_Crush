@@ -202,6 +202,9 @@ public class Controller extends Application {
                 // Update the grid in UI
                 removeGrid();
                 updateGrid();
+
+                // Update user score on UI
+                ScoreLbl.setText("Score: " + model.getUserScore());
             }
         }
     }
