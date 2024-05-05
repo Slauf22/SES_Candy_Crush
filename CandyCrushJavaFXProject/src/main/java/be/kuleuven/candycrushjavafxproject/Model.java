@@ -60,39 +60,39 @@ public class Model {
     //Member Functions//
     ////////////////////
 
-    public Candy GenerateRandomCandy(){
+    public Candy GenerateRandomCandy() {
         Random random = new Random();
         int randomNumber = random.nextInt(40);
 
         //Minder kans om een speciale snoep te genereren dan een normale
-        if (randomNumber == 39){
+        if (randomNumber == 39) {
             return new rowDeleteCandy(4);
         }
-        if (randomNumber == 38){
+        if (randomNumber == 38) {
             return new extraMoveCandy(5);
         }
-        if (randomNumber == 37){
+        if (randomNumber == 37) {
             return new doublePointsCandy(6);
         }
-        if (randomNumber == 36){
+        if (randomNumber == 36) {
             return new borderDeleteCandy(7);
         }
 
         return new normalCandy(random.nextInt(4));
     }
 
-    public Position RxCToPosition(String gridPosition){
-        int row = Integer.parseInt(gridPosition.substring(0,1));
-        int col = Integer.parseInt(gridPosition.substring(2,3));
+    public Position RxCToPosition(String gridPosition) {
+        int row = Integer.parseInt(gridPosition.substring(0, 1));
+        int col = Integer.parseInt(gridPosition.substring(2, 3));
 
-        return new Position(row,col,boardSize);
+        return new Position(row, col, boardSize);
     }
 
     public void IncreaseScore(int value) {
         userScore += value;
     }
 
-    public Iterable<Position> getSameNeighbourPositions(Position position){
+    public Iterable<Position> getSameNeighbourPositions(Position position) {
 
         //Find the row of the index
         int indexRow = position.row();
@@ -110,30 +110,23 @@ public class Model {
         int colCounter = 1;
 
         // Loop over grid
-        for (int i = 0; i < boardSize.rows()* boardSize.cols(); i++)
-        {
+        for (int i = 0; i < boardSize.rows() * boardSize.cols(); i++) {
             // We are in a neighbouring column, left or right. Can also be same column if element is one row above or below
-            if (colCounter == indexCol - 1  || colCounter == indexCol + 1 || colCounter == indexCol)
-            {
+            if (colCounter == indexCol - 1 || colCounter == indexCol + 1 || colCounter == indexCol) {
                 // We are in a neighbouring row, above or below. Can also be same row if element is one col left or right
-                if (rowCounter == indexRow - 1 || rowCounter == indexRow + 1 || rowCounter == indexRow)
-                {
+                if (rowCounter == indexRow - 1 || rowCounter == indexRow + 1 || rowCounter == indexRow) {
                     //If neighbour has same value, add index to arraylist. Also check if the loop isn't at the indexToCheck.
-                    if ((candyBoard.getCellAt(Position.fromIndex(i,boardSize)).getColor() == valueIndex) && !(rowCounter == indexRow && colCounter == indexCol))
-                    {
+                    if ((candyBoard.getCellAt(Position.fromIndex(i, boardSize)).getColor() == valueIndex) && !(rowCounter == indexRow && colCounter == indexCol)) {
                         neighbours.add(RxCToPosition(Integer.toString(rowCounter) + "x" + Integer.toString(colCounter)));
                     }
                 }
             }
 
             //Update row and col of element in grid
-            if(colCounter == boardSize.cols())
-            {
+            if (colCounter == boardSize.cols()) {
                 colCounter = 1;
                 rowCounter++;
-            }
-            else
-            {
+            } else {
                 colCounter++;
             }
         }
@@ -141,10 +134,10 @@ public class Model {
         return neighbours;
     }
 
-    boolean firstTwoHaveCandy(Candy candy, Stream<Position> positions){
+    boolean firstTwoHaveCandy(Candy candy, Stream<Position> positions) {
         List<Position> positionList = positions.toList();
 
-        if (positionList.size() < 2){
+        if (positionList.size() < 2) {
             return false;
         }
 
@@ -156,7 +149,7 @@ public class Model {
         return nMatches >= 2;
     }
 
-    List<Position> longestMatchToRight(Position pos){
+    List<Position> longestMatchToRight(Position pos) {
         Stream<Position> rightPositions = pos.walkRight();
 
         Candy currentCandy = candyBoard.getCellAt(pos);
@@ -167,7 +160,7 @@ public class Model {
         return lst;
     }
 
-    List<Position> longestMatchDown(Position pos){
+    List<Position> longestMatchDown(Position pos) {
         Stream<Position> rightPositions = pos.walkDown();
 
         Candy currentCandy = candyBoard.getCellAt(pos);
@@ -179,17 +172,17 @@ public class Model {
         return lst;
     }
 
-    Stream<Position> horizontalStartingPositions(){
+    Stream<Position> horizontalStartingPositions() {
         List<Position> positionList = new ArrayList<>();
         Position currentPosition;
         Candy currentCandy;
 
-        for (int i = 0; i < boardSize.rows()*boardSize.cols(); i++){
-            currentPosition = Position.fromIndex(i,boardSize);
+        for (int i = 0; i < boardSize.rows() * boardSize.cols(); i++) {
+            currentPosition = Position.fromIndex(i, boardSize);
             List<Position> positionsLeft = currentPosition.walkLeft().toList();
 
             // Only enters when candy is on first column
-            if (positionsLeft.size() < 2){
+            if (positionsLeft.size() < 2) {
                 positionList.add(currentPosition);
                 continue;
             }
@@ -197,7 +190,7 @@ public class Model {
             currentCandy = candyBoard.getCellAt(currentPosition);
             Stream<Position> positionsStream = positionsLeft.stream();
 
-            if (!firstTwoHaveCandy(currentCandy, positionsStream)){
+            if (!firstTwoHaveCandy(currentCandy, positionsStream)) {
                 positionList.add(currentPosition);
             }
         }
@@ -205,17 +198,17 @@ public class Model {
         return positionList.stream();
     }
 
-    Stream<Position> verticalStartingPositions(){
+    Stream<Position> verticalStartingPositions() {
         List<Position> positionList = new ArrayList<>();
         Position currentPosition;
         Candy currentCandy;
 
-        for (int i = 0; i < boardSize.rows()*boardSize.cols(); i++){
-            currentPosition = Position.fromIndex(i,boardSize);
+        for (int i = 0; i < boardSize.rows() * boardSize.cols(); i++) {
+            currentPosition = Position.fromIndex(i, boardSize);
             List<Position> positionsUp = currentPosition.walkUp().toList();
 
             // No combinations possible
-            if (positionsUp.size() < 2){
+            if (positionsUp.size() < 2) {
                 positionList.add(currentPosition);
                 continue;
             }
@@ -223,7 +216,7 @@ public class Model {
             currentCandy = candyBoard.getCellAt(currentPosition);
             Stream<Position> positionsStream = positionsUp.stream();
 
-            if (!firstTwoHaveCandy(currentCandy, positionsStream)){
+            if (!firstTwoHaveCandy(currentCandy, positionsStream)) {
                 positionList.add(currentPosition);
             }
         }
@@ -231,11 +224,12 @@ public class Model {
         return positionList.stream();
     }
 
-    Set<List<Position>> findAllMatches(){
+    Set<List<Position>> findAllMatches() {
         Stream<Position> verticalStream = verticalStartingPositions();
         Stream<Position> horizontalStream = horizontalStartingPositions();
 
-        Set<List<Position>> matches = new HashSet<>();;
+        Set<List<Position>> matches = new HashSet<>();
+        ;
 
         matches.addAll(verticalStream
                 .filter(position -> candyBoard.getCellAt(position).getColor() != 99)
@@ -252,69 +246,68 @@ public class Model {
         return matches;
     }
 
-    void clearMatch(List<Position> match){
+    void clearMatch(List<Position> match) {
         if (match.isEmpty()) return;
 
         // Increase score
         userScore++;
 
         // normal cnady color 99 is clear candy
-        candyBoard.replaceCellAt(match.get(0),new normalCandy(99));
-        clearMatch(match.subList(1,match.size()));
+        candyBoard.replaceCellAt(match.get(0), new normalCandy(99));
+        clearMatch(match.subList(1, match.size()));
     }
 
-    void fallDownTo(Position position){
+    void fallDownTo(Position position) {
         // Passed position msut be empty candy
-        if (candyBoard.getCellAt(position).getColor() != 99){
+        if (candyBoard.getCellAt(position).getColor() != 99) {
             return;
         }
 
-        if (position.row() == 1){
+        if (position.row() == 1) {
             return;
         }
 
-        Position p = new Position(position.row()-1, position.col(), boardSize);
+        Position p = new Position(position.row() - 1, position.col(), boardSize);
 
-        while (p.row() >= 1){
+        while (p.row() >= 1) {
             //If not empty candy
-            if (candyBoard.getCellAt(p).getColor() != 99)
-            {
+            if (candyBoard.getCellAt(p).getColor() != 99) {
                 candyBoard.replaceCellAt(position, candyBoard.getCellAt(p));
                 candyBoard.replaceCellAt(p, new normalCandy(99));
 
-                fallDownTo(new Position(position.row()-1, position.col(), boardSize));
+                fallDownTo(new Position(position.row() - 1, position.col(), boardSize));
                 break;
             }
 
             if (p.row() > 1) {
                 p = new Position(p.row() - 1, p.col(), boardSize);
-            }else{
+            } else {
                 break;
             }
         }
     }
 
-    boolean updateBoard(){
+    boolean updateBoard() {
         Set<List<Position>> matches = findAllMatches().stream()
                 .filter(match -> candyBoard.getCellAt(match.getFirst()).getColor() != 99)
                 .collect(Collectors.toSet());
 
-        if (matches.isEmpty()){
+        if (matches.isEmpty()) {
             return false;
         }
 
         Iterator<List<Position>> matchesIterator = matches.iterator();
 
         // Eerst alles clearen dan alles laten vallen
-        while (matchesIterator.hasNext()){
+        while (matchesIterator.hasNext()) {
             List<Position> match = matchesIterator.next();
             clearMatch(match);
         }
         matchesIterator = matches.iterator();
-        while (matchesIterator.hasNext()){
+        while (matchesIterator.hasNext()) {
             List<Position> match = matchesIterator.next();
             Iterator<Position> positionIterator = match.iterator();
-            while (positionIterator.hasNext()){
+            while (positionIterator.hasNext()) {
                 fallDownTo(positionIterator.next());
             }
         }
@@ -324,13 +317,13 @@ public class Model {
         return true;
     }
 
-    Position nodeToPosition(Node nodeOfCandy){
+    Position nodeToPosition(Node nodeOfCandy) {
         String idRxC = nodeOfCandy.getId().substring(3);
 
-        return new Position(((int) idRxC.charAt(0)) - 48, ((int) idRxC.charAt(2)) - 48,boardSize);
+        return new Position(((int) idRxC.charAt(0)) - 48, ((int) idRxC.charAt(2)) - 48, boardSize);
     }
 
-    public void maximizeScore(){
+    public void maximizeScore() {
         // Kopieer het bord in dit object en de score. Alle andere functies werken hierop
         Board<Candy> boardBackup = new Board<>(boardSize);
         candyBoard.copyTo(boardBackup);
@@ -346,11 +339,11 @@ public class Model {
         System.out.println(allSolutions);
     }
 
-    public boolean findSolution(String currentInstruction){
-        // Base case, no matches left FOUT
-        if (findAllMatches().isEmpty()){
+    public boolean findSolution(String currentInstruction) {
+        // Base case
+        if (findPotentialCombinations()) {
             HashMap<Integer, String> solution = new HashMap<>();
-            solution.put(userScore,currentInstruction);
+            solution.put(userScore, currentInstruction);
             allSolutions.add(solution);
             return true;
         }
@@ -358,7 +351,7 @@ public class Model {
         // Iterate through each cell on the board
         for (int r = 1; r <= boardSize.rows(); r++) {
             for (int c = 1; c <= boardSize.cols(); c++) {
-                // Swap with the candy to the right
+                // Swap with the candy to the right and make sure it isnt a white one
                 if (c < boardSize.cols()) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
@@ -366,7 +359,7 @@ public class Model {
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c + 1, boardSize));
                     updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c +"R"); // Indicate the move direction in the instruction
+                    findSolution(currentInstruction + r + "x" + c + "R"); // Indicate the move direction in the instruction
 
                     backtrackBoard.copyTo(candyBoard); // Backtrack
                 }
@@ -379,7 +372,7 @@ public class Model {
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c - 1, boardSize));
                     updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c +"L"); // Indicate the move direction in the instruction
+                    findSolution(currentInstruction + r + "x" + c + "L"); // Indicate the move direction in the instruction
 
                     backtrackBoard.copyTo(candyBoard); // Backtrack
                 }
@@ -392,7 +385,7 @@ public class Model {
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r + 1, c, boardSize));
                     updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c +"D"); // Indicate the move direction in the instruction
+                    findSolution(currentInstruction + r + "x" + c + "D"); // Indicate the move direction in the instruction
 
                     backtrackBoard.copyTo(candyBoard); // Backtrack
                 }
@@ -405,13 +398,61 @@ public class Model {
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r - 1, c, boardSize));
                     updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c +"U"); // Indicate the move direction in the instruction
+                    findSolution(currentInstruction + r + "x" + c + "U"); // Indicate the move direction in the instruction
 
                     backtrackBoard.copyTo(candyBoard); // Backtrack
                 }
             }
         }
         return false; // Indicate no solution found from this state
+    }
+
+    // Returns true is there is at least 1 combination when a candy is moved correctly. Used for base case of maximize function
+    public boolean findPotentialCombinations() {
+        Board<Candy> boardToUse = new Board<>(boardSize);
+
+        // Iterate through each cell on the board
+        for (int r = 1; r <= boardSize.rows(); r++) {
+            for (int c = 1; c <= boardSize.cols(); c++) {
+                // Swap with the candy to the right
+                if (c < boardSize.cols() && candyBoard.getCellAt(new Position(r,c + 1,boardSize)).getColor() != 99) {
+                    // Reset board to current state before each swap
+                    candyBoard.copyTo(boardToUse);
+                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c + 1,boardSize));
+                    if (!findAllMatches().isEmpty()){
+                        return true;
+                    }
+                }
+
+                // Swap with the candy to the left
+                if (c > 1 && candyBoard.getCellAt(new Position(r,c - 1,boardSize)).getColor() != 99) {
+                    candyBoard.copyTo(boardToUse);
+                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c - 1,boardSize));
+                    if (!findAllMatches().isEmpty()){
+                        return true;
+                    }
+                }
+
+                // Swap with the candy below
+                if (r < boardSize.rows() && candyBoard.getCellAt(new Position(r + 1,c,boardSize)).getColor() != 99) {
+                    candyBoard.copyTo(boardToUse);
+                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r + 1,c,boardSize));
+                    if (!findAllMatches().isEmpty()){
+                        return true;
+                    }
+                }
+
+                // Swap with the candy above
+                if (r > 1 && candyBoard.getCellAt(new Position(r - 1,c,boardSize)).getColor() != 99) {
+                    candyBoard.copyTo(boardToUse);
+                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r - 1,c,boardSize));
+                    if (!findAllMatches().isEmpty()){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
 
