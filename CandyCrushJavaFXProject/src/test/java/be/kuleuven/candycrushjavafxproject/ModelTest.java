@@ -1,6 +1,8 @@
 package be.kuleuven.candycrushjavafxproject;
 
 import be.kuleuven.candycrushjavafxproject.Candies.Candy;
+import be.kuleuven.candycrushjavafxproject.Candies.borderDeleteCandy;
+import be.kuleuven.candycrushjavafxproject.Candies.doublePointsCandy;
 import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
@@ -278,5 +280,34 @@ public class ModelTest {
         candyBoard.fill(cellCreator);
 
         model.updateBoard();
+    }
+
+    @Test
+    public void maximizeScoreTest(){
+        BoardSize boardSize = new BoardSize(4,4);
+        Board<Candy> candyBoard = new Board<>(boardSize);
+        Model model = new Model(boardSize,candyBoard);
+
+        Function<Position, Candy> cellCreator = pos -> {
+            int index = pos.toIndex();
+            return switch (index) {
+                case 0 -> new normalCandy(1);
+                case 1, 3, 10, 14, 15 -> new normalCandy(3);
+                case 2, 5, 7, 8, 12 -> new normalCandy(0);
+                case 4, 6, 9 -> new normalCandy(2);
+                case 11 -> new doublePointsCandy(6);
+                case 13 -> new borderDeleteCandy(7);
+                default -> null; // Handle invalid indexes if needed
+            };
+        };
+
+        candyBoard.fill(cellCreator);
+
+        candyBoard.printBoard();
+
+        Board<Candy> boardToSolve = new Board<>(boardSize);
+        candyBoard.copyTo(boardToSolve);
+
+        model.maximizeScore();
     }
 }

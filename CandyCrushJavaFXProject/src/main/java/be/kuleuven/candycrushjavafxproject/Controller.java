@@ -60,7 +60,7 @@ public class Controller extends Application {
 
     public Controller()
     {
-        boardSize = new BoardSize(8,8);
+        boardSize = new BoardSize(4,4);
         candyBoard = new Board<>(boardSize);
         model = new Model(boardSize, candyBoard);
         view = new View();

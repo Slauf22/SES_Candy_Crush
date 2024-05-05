@@ -1,13 +1,13 @@
 package be.kuleuven.candycrushjavafxproject.GenericBoard;
 
 import be.kuleuven.candycrushjavafxproject.BoardSize;
+import be.kuleuven.candycrushjavafxproject.Candies.Candy;
 import be.kuleuven.candycrushjavafxproject.Position;
 
 import java.util.*;
 import java.util.function.Function;
 
 public class Board <T>{
-
     private final HashMap<Position, T> positionToCellMap;
     private final HashMap<T, Set<Position>> cellToPositionMap;
     private final int rows;
@@ -88,5 +88,14 @@ public class Board <T>{
             positionToCellMap.put(pos2, temp);
             return true;
         }else return false;
+    }
+
+    public void printBoard(){
+        for (int r = 1; r <= boardSize.rows(); r++){
+            for (int c = 1; c <= boardSize.cols(); c++){
+                System.out.print(((Candy)positionToCellMap.get(new Position(r,c,boardSize))).getColor());
+            }
+            System.out.println();
+        }
     }
 }

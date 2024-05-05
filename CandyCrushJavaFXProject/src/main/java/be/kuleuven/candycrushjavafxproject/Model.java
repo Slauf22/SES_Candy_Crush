@@ -20,6 +20,9 @@ public class Model {
     private String PlayerName;
     private final BoardSize boardSize;
     private final Board<Candy> candyBoard;
+    // Voor maximizeScore
+    private final List<HashMap<Integer, String>> allSolutions = new ArrayList<>();
+
     ///////////////
     //Constructor//
     ///////////////
@@ -325,6 +328,90 @@ public class Model {
         String idRxC = nodeOfCandy.getId().substring(3);
 
         return new Position(((int) idRxC.charAt(0)) - 48, ((int) idRxC.charAt(2)) - 48,boardSize);
+    }
+
+    public void maximizeScore(){
+        // Kopieer het bord in dit object en de score. Alle andere functies werken hierop
+        Board<Candy> boardBackup = new Board<>(boardSize);
+        candyBoard.copyTo(boardBackup);
+
+        int score = userScore;
+
+        findSolution("");
+
+        // Na de oplossing zet de oorspronkelijke bord terug hoe ze was, en de score.
+        boardBackup.copyTo(candyBoard);
+        userScore = score;
+
+        System.out.println(allSolutions);
+    }
+
+    public boolean findSolution(String currentInstruction){
+        // Base case, no matches left FOUT
+        if (findAllMatches().isEmpty()){
+            HashMap<Integer, String> solution = new HashMap<>();
+            solution.put(userScore,currentInstruction);
+            allSolutions.add(solution);
+            return true;
+        }
+
+        // Iterate through each cell on the board
+        for (int r = 1; r <= boardSize.rows(); r++) {
+            for (int c = 1; c <= boardSize.cols(); c++) {
+                // Swap with the candy to the right
+                if (c < boardSize.cols()) {
+                    Board<Candy> backtrackBoard = new Board<>(boardSize);
+                    candyBoard.copyTo(backtrackBoard);
+
+                    candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c + 1, boardSize));
+                    updateBoard();
+
+                    findSolution(currentInstruction + r + "x" + c +"R"); // Indicate the move direction in the instruction
+
+                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                }
+
+                // Swap with the candy to the left
+                if (c > 1) {
+                    Board<Candy> backtrackBoard = new Board<>(boardSize);
+                    candyBoard.copyTo(backtrackBoard);
+
+                    candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c - 1, boardSize));
+                    updateBoard();
+
+                    findSolution(currentInstruction + r + "x" + c +"L"); // Indicate the move direction in the instruction
+
+                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                }
+
+                // Swap with the candy below
+                if (r < boardSize.rows()) {
+                    Board<Candy> backtrackBoard = new Board<>(boardSize);
+                    candyBoard.copyTo(backtrackBoard);
+
+                    candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r + 1, c, boardSize));
+                    updateBoard();
+
+                    findSolution(currentInstruction + r + "x" + c +"D"); // Indicate the move direction in the instruction
+
+                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                }
+
+                // Swap with the candy above
+                if (r > 1) {
+                    Board<Candy> backtrackBoard = new Board<>(boardSize);
+                    candyBoard.copyTo(backtrackBoard);
+
+                    candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r - 1, c, boardSize));
+                    updateBoard();
+
+                    findSolution(currentInstruction + r + "x" + c +"U"); // Indicate the move direction in the instruction
+
+                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                }
+            }
+        }
+        return false; // Indicate no solution found from this state
     }
 }
 
