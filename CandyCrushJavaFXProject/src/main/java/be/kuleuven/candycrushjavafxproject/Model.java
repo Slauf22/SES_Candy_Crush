@@ -409,46 +409,49 @@ public class Model {
 
     // Returns true is there is at least 1 combination when a candy is moved correctly. Used for base case of maximize function
     public boolean findPotentialCombinations() {
-        Board<Candy> boardToUse = new Board<>(boardSize);
+        Board<Candy> backup = new Board<>(boardSize);
+        candyBoard.copyTo(backup);
 
         // Iterate through each cell on the board
         for (int r = 1; r <= boardSize.rows(); r++) {
             for (int c = 1; c <= boardSize.cols(); c++) {
                 // Swap with the candy to the right
                 if (c < boardSize.cols() && candyBoard.getCellAt(new Position(r,c + 1,boardSize)).getColor() != 99) {
-                    // Reset board to current state before each swap
-                    candyBoard.copyTo(boardToUse);
-                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c + 1,boardSize));
+                    candyBoard.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c + 1,boardSize));
                     if (!findAllMatches().isEmpty()){
                         return true;
                     }
+                    backup.copyTo(candyBoard);
                 }
 
                 // Swap with the candy to the left
                 if (c > 1 && candyBoard.getCellAt(new Position(r,c - 1,boardSize)).getColor() != 99) {
-                    candyBoard.copyTo(boardToUse);
-                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c - 1,boardSize));
+                    candyBoard.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c - 1,boardSize));
                     if (!findAllMatches().isEmpty()){
+                        backup.copyTo(candyBoard);
                         return true;
                     }
+                    backup.copyTo(candyBoard);
                 }
 
                 // Swap with the candy below
                 if (r < boardSize.rows() && candyBoard.getCellAt(new Position(r + 1,c,boardSize)).getColor() != 99) {
-                    candyBoard.copyTo(boardToUse);
-                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r + 1,c,boardSize));
+                    candyBoard.swapTwoPositions(new Position(r,c,boardSize),new Position(r + 1,c,boardSize));
                     if (!findAllMatches().isEmpty()){
+                        backup.copyTo(candyBoard);
                         return true;
                     }
+                    backup.copyTo(candyBoard);
                 }
 
                 // Swap with the candy above
                 if (r > 1 && candyBoard.getCellAt(new Position(r - 1,c,boardSize)).getColor() != 99) {
-                    candyBoard.copyTo(boardToUse);
-                    boardToUse.swapTwoPositions(new Position(r,c,boardSize),new Position(r - 1,c,boardSize));
+                    candyBoard.swapTwoPositions(new Position(r,c,boardSize),new Position(r - 1,c,boardSize));
                     if (!findAllMatches().isEmpty()){
+                        backup.copyTo(candyBoard);
                         return true;
                     }
+                    backup.copyTo(candyBoard);
                 }
             }
         }

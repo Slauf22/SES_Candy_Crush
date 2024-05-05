@@ -308,6 +308,8 @@ public class ModelTest {
         Board<Candy> boardToSolve = new Board<>(boardSize);
         candyBoard.copyTo(boardToSolve);
 
-        model.maximizeScore();
+        boolean result = model.findPotentialCombinations();
+
+        System.out.println(result);
     }
 }
