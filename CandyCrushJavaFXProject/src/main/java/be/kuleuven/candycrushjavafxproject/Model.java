@@ -60,6 +60,11 @@ public class Model {
     //Member Functions//
     ////////////////////
 
+
+    public void setUserScore(int userScore) {
+        this.userScore = userScore;
+    }
+
     public Candy GenerateRandomCandy() {
         Random random = new Random();
         int randomNumber = random.nextInt(40);

@@ -5,15 +5,12 @@ import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -49,6 +46,7 @@ public class Controller extends Application {
     private final View view;
     private final BoardSize boardSize;
     private final Board<Candy> candyBoard;
+    private final Board<Candy> candyBoardCopied;
     private int nClicked;
     private Node highlightedNode;
 
@@ -60,6 +58,7 @@ public class Controller extends Application {
     {
         boardSize = new BoardSize(5,5);
         candyBoard = new Board<>(boardSize);
+        candyBoardCopied = new Board<>(boardSize);
         model = new Model(boardSize, candyBoard);
         view = new View();
         nClicked = 0;
@@ -95,11 +94,11 @@ public class Controller extends Application {
         ScoreLbl.setLayoutX(414.0);
         ScoreLbl.setFont(new Font(33.0));
 
+        model.setUserScore(0);
+
         pane.getChildren().add(ScoreLbl);
 
         GenerateGridNodes();
-
-        candyBoard.printBoard();
 
         stage.show();
     }
@@ -114,22 +113,32 @@ public class Controller extends Application {
     //////////////////
 
     public void StartButtonHandle(ActionEvent event) throws IOException {
+        String name = "Player";
+
         if (!Objects.equals(NameTextBox.getText(), ""))
         {
-            //Read name
-            model.setPlayerName(NameTextBox.getText());
-
-            //Read stage, otherwise its null
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-
-            //Create game window
-            CreateWindow();
+            name = NameTextBox.getText();
         }
+
+        //Read name
+        model.setPlayerName(name);
+
+        //Read stage, otherwise its null
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+        //Create game window
+        CreateWindow();
+
     }
 
-    public void RandomizeButtonHandler(ActionEvent event) throws IOException{
+    public void ResetButtonHandler(ActionEvent event) throws IOException{
+        model.setUserScore(0);
+        ScoreLbl.setText("Score: 0");
+
+        candyBoardCopied.copyTo(candyBoard);
+
         removeGrid();
-        GenerateGridNodes();
+        updateGrid();
     }
 
     public void HandleLabelClick(MouseEvent event) {
@@ -213,6 +222,10 @@ public class Controller extends Application {
         view.CreateLoginWindow(stage);
     }
 
+    public void SolveButtonHandler() throws  IOException {
+        System.out.println("solve button");
+    }
+
     private void GenerateGridNodes()
     {
         Function<Position, Candy> cellCreator = position -> {
@@ -220,6 +233,7 @@ public class Controller extends Application {
         };
 
         candyBoard.fill(cellCreator);
+        candyBoard.copyTo(candyBoardCopied);
 
         if (!model.findAllMatches().isEmpty())
         {

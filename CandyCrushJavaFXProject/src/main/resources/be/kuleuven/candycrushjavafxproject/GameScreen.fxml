@@ -11,6 +11,7 @@
       </font>
    </Label>
    <Label fx:id="NameLabel" contentDisplay="CENTER" layoutX="250.0" layoutY="70.0" prefHeight="21.0" prefWidth="99.0" text="Player Name Here" textAlignment="CENTER" />
-   <Button fx:id="RandomizeButton" layoutX="64.0" layoutY="187.0" mnemonicParsing="false" onAction="#RandomizeButtonHandler" text="Randomize Grid" />
-   <Button fx:id="RestartButton" layoutX="87.0" layoutY="273.0" mnemonicParsing="false" text="Restart" onAction="#RestartButtonHandler"/>
+   <Button fx:id="ResetButton" layoutX="87.0" layoutY="187.0" mnemonicParsing="false" onAction="#ResetButtonHandler" text="Reset" />
+   <Button fx:id="RestartButton" layoutX="87.0" layoutY="240.0" mnemonicParsing="false" text="Restart" onAction="#RestartButtonHandler"/>
+   <Button fx:id="SolveButton" layoutX="87.0" layoutY="297.0" mnemonicParsing="false" text="Solve" onAction="#SolveButtonHandler"/>
 </AnchorPane>
