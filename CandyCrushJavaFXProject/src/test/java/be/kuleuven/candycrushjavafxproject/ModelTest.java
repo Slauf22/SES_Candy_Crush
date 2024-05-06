@@ -1,9 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
-import be.kuleuven.candycrushjavafxproject.Candies.Candy;
-import be.kuleuven.candycrushjavafxproject.Candies.borderDeleteCandy;
-import be.kuleuven.candycrushjavafxproject.Candies.doublePointsCandy;
-import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
+import be.kuleuven.candycrushjavafxproject.Candies.*;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
@@ -284,19 +281,38 @@ public class ModelTest {
 
     @Test
     public void maximizeScoreTest(){
-        BoardSize boardSize = new BoardSize(4,4);
+        BoardSize boardSize = new BoardSize(5,5);
         Board<Candy> candyBoard = new Board<>(boardSize);
         Model model = new Model(boardSize,candyBoard);
 
         Function<Position, Candy> cellCreator = pos -> {
             int index = pos.toIndex();
             return switch (index) {
-                case 0 -> new normalCandy(1);
-                case 1, 3, 10, 14, 15 -> new normalCandy(3);
-                case 2, 5, 7, 8, 12 -> new normalCandy(0);
-                case 4, 6, 9 -> new normalCandy(2);
-                case 11 -> new doublePointsCandy(6);
-                case 13 -> new borderDeleteCandy(7);
+                case 0 -> new normalCandy(1);  // red
+                case 1 -> new normalCandy(0); // blue
+                case 2 -> new normalCandy(3); // green
+                case 3 -> new normalCandy(0); // yellow
+                case 4 -> new normalCandy(2); // orange
+                case 5 -> new normalCandy(2); // purple
+                case 6 -> new normalCandy(1); // red
+                case 7 -> new normalCandy(0); // blue
+                case 8 -> new normalCandy(2); // green
+                case 9 -> new normalCandy(2); // yellow
+                case 10 -> new normalCandy(2); // orange
+                case 11 -> new normalCandy(3); // purple
+                case 12 -> new borderDeleteCandy(7); // red
+                case 13 -> new rowDeleteCandy(4); // blue
+                case 14 -> new normalCandy(3); // green
+                case 15 -> new borderDeleteCandy(7); // yellow
+                case 16 -> new normalCandy(1); // orange
+                case 17 -> new normalCandy(0); // purple
+                case 18 -> new rowDeleteCandy(4); // red
+                case 19 -> new doublePointsCandy(6); // blue
+                case 20 -> new normalCandy(1); // green
+                case 21 -> new normalCandy(2); // yellow
+                case 22 -> new normalCandy(2); // orange
+                case 23 -> new normalCandy(0); // purple
+                case 24 -> new normalCandy(2); // red
                 default -> null; // Handle invalid indexes if needed
             };
         };

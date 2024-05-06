@@ -326,15 +326,19 @@ public class Model {
         // Kopieer het bord in dit object en de score. Alle andere functies werken hierop
         Board<Candy> boardBackup = new Board<>(boardSize);
         candyBoard.copyTo(boardBackup);
-
         int score = userScore;
 
         findSolution("");
 
-        // Na de oplossing zet de oorspronkelijke bord terug hoe ze was, en de score.
+        // Na de oplossing zet de oorspronkelijke bord en score terug hoe ze waren.
         boardBackup.copyTo(candyBoard);
         userScore = score;
 
+        // Print instructie voor hoogste score
+//        int maxKey = allSolutions.keySet().stream().max(Comparator.naturalOrder()).orElseThrow();
+//
+//        System.out.println("Instruction for achieving the highest score with this board. Rows and cols start from 1 and go to their size.");
+//        System.out.println("Score " + maxKey + ": " + allSolutions.get(maxKey));
         System.out.println(allSolutions);
     }
 

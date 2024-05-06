@@ -58,7 +58,7 @@ public class Controller extends Application {
 
     public Controller()
     {
-        boardSize = new BoardSize(4,4);
+        boardSize = new BoardSize(5,5);
         candyBoard = new Board<>(boardSize);
         model = new Model(boardSize, candyBoard);
         view = new View();
@@ -98,6 +98,8 @@ public class Controller extends Application {
         pane.getChildren().add(ScoreLbl);
 
         GenerateGridNodes();
+
+        candyBoard.printBoard();
 
         stage.show();
     }
@@ -213,21 +215,8 @@ public class Controller extends Application {
 
     private void GenerateGridNodes()
     {
-//        Function<Position, Candy> cellCreator = position -> {
-//            return model.GenerateRandomCandy();
-//        };
-
-        Function<Position, Candy> cellCreator = pos -> {
-            int index = pos.toIndex();
-            return switch (index) {
-                case 0 -> new normalCandy(1);
-                case 1, 3, 10, 14, 15 -> new normalCandy(3);
-                case 2, 5, 7, 8, 12 -> new normalCandy(0);
-                case 4, 6, 9 -> new normalCandy(2);
-                case 11 -> new doublePointsCandy(6);
-                case 13 -> new borderDeleteCandy(7);
-                default -> null; // Handle invalid indexes if needed
-            };
+        Function<Position, Candy> cellCreator = position -> {
+            return model.GenerateRandomCandy();
         };
 
         candyBoard.fill(cellCreator);
