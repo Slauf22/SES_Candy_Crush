@@ -223,7 +223,7 @@ public class Controller extends Application {
     }
 
     public void SolveButtonHandler() throws  IOException {
-        System.out.println("solve button");
+        model.maximizeScore();
     }
 
     private void GenerateGridNodes()

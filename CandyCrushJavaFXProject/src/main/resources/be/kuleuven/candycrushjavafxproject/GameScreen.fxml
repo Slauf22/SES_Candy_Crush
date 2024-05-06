@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import com.sun.javafx.charts.Legend?>
 <AnchorPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <Label layoutX="236.0" layoutY="36.0" text="Candy Crush">
       <font>
@@ -13,5 +14,7 @@
    <Label fx:id="NameLabel" contentDisplay="CENTER" layoutX="250.0" layoutY="70.0" prefHeight="21.0" prefWidth="99.0" text="Player Name Here" textAlignment="CENTER" />
    <Button fx:id="ResetButton" layoutX="87.0" layoutY="187.0" mnemonicParsing="false" onAction="#ResetButtonHandler" text="Reset" />
    <Button fx:id="RestartButton" layoutX="87.0" layoutY="240.0" mnemonicParsing="false" text="Restart" onAction="#RestartButtonHandler"/>
-   <Button fx:id="SolveButton" layoutX="87.0" layoutY="297.0" mnemonicParsing="false" text="Solve" onAction="#SolveButtonHandler"/>
+   <Button fx:id="SolveButton" layoutX="87.0" layoutY="293.0" mnemonicParsing="false" text="Solve" onAction="#SolveButtonHandler"/>
+   <Label layoutX="30.0" layoutY="327.0" text="Prints best solution in terminal."/>
+   <Label layoutX="20.0" layoutY="351.0" text="(Can take time depending on size.)"/>
 </AnchorPane>

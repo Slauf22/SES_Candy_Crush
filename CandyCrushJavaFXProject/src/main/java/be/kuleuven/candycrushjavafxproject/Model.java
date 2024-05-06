@@ -340,11 +340,11 @@ public class Model {
         userScore = score;
 
         // Print instructie voor hoogste score
-//        int maxKey = allSolutions.keySet().stream().max(Comparator.naturalOrder()).orElseThrow();
-//
-//        System.out.println("Instruction for achieving the highest score with this board. Rows and cols start from 1 and go to their size.");
-//        System.out.println("Score " + maxKey + ": " + allSolutions.get(maxKey));
-        System.out.println(allSolutions);
+        int maxKey = allSolutions.keySet().stream().max(Comparator.naturalOrder()).orElseThrow();
+
+        System.out.println("Instruction for achieving the highest score with this board. Rows and columns start from 1 and go up to their size.");
+        System.out.println("Format is ROWxCOLUMN followed by where to move that candy.");
+        System.out.println("Score " + maxKey + ": " + allSolutions.get(maxKey));
     }
 
     public boolean findSolution(String currentInstruction) {
@@ -369,7 +369,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " Right "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Right | "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -392,7 +392,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " Left "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Left | "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -415,7 +415,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " Down "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Down | "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -438,7 +438,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " Up "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Up | "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
