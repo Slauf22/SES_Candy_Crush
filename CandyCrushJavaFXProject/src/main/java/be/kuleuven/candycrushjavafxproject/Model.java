@@ -351,8 +351,9 @@ public class Model {
         for (int r = 1; r <= boardSize.rows(); r++) {
             for (int c = 1; c <= boardSize.cols(); c++) {
                 // Swap with the candy to the right and make sure it isnt a white one
-                if (c < boardSize.cols() && candyBoard.getCellAt(new Position(r,c + 1,boardSize)).getColor() != 99) {
+                if (c < boardSize.cols() && candyBoard.getCellAt(new Position(r,c + 1,boardSize)).getColor() != 99 && candyBoard.getCellAt(new Position(r,c,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
+                    int scoreBackup = userScore;
                     candyBoard.copyTo(backtrackBoard);
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c + 1, boardSize));
@@ -364,16 +365,19 @@ public class Model {
                         findSolution(currentInstruction + r + "x" + c + " - to R - "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                     else{
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                 }
 
                 // Swap with the candy to the left
-                if (c > 1 && candyBoard.getCellAt(new Position(r,c - 1,boardSize)).getColor() != 99) {
+                if (c > 1 && candyBoard.getCellAt(new Position(r,c - 1,boardSize)).getColor() != 99 && candyBoard.getCellAt(new Position(r,c,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
+                    int scoreBackup = userScore;
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c - 1, boardSize));
 
@@ -384,16 +388,19 @@ public class Model {
                         findSolution(currentInstruction + r + "x" + c + " - to L - "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                     else{
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                 }
 
                 // Swap with the candy below
-                if (r < boardSize.rows() && candyBoard.getCellAt(new Position(r + 1,c,boardSize)).getColor() != 99) {
+                if (r < boardSize.rows() && candyBoard.getCellAt(new Position(r + 1,c,boardSize)).getColor() != 99 && candyBoard.getCellAt(new Position(r,c,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
+                    int scoreBackup = userScore;
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r + 1, c, boardSize));
 
@@ -404,16 +411,19 @@ public class Model {
                         findSolution(currentInstruction + r + "x" + c + " - to D - "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                     else{
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                 }
 
                 // Swap with the candy above
-                if (r > 1 && candyBoard.getCellAt(new Position(r - 1,c,boardSize)).getColor() != 99) {
+                if (r > 1 && candyBoard.getCellAt(new Position(r - 1,c,boardSize)).getColor() != 99 && candyBoard.getCellAt(new Position(r,c,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
+                    int scoreBackup = userScore;
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r - 1, c, boardSize));
 
@@ -424,9 +434,11 @@ public class Model {
                         findSolution(currentInstruction + r + "x" + c + " - to U - "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                     else{
                         backtrackBoard.copyTo(candyBoard); // Backtrack
+                        userScore = scoreBackup;
                     }
                 }
             }

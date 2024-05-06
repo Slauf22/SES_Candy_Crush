@@ -35,6 +35,11 @@ public class Board <T>{
         // If there is an old cell, remove the corresponding position
         if (oldCell != null) {
             Set<Position> oldPositions = cellToPositionMap.get(oldCell);
+
+            if (oldPositions == null){
+                System.out.println(oldCell);
+            }
+
             oldPositions.remove(position);
 
             if (oldPositions.isEmpty()) {
