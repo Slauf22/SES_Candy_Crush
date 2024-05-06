@@ -229,7 +229,6 @@ public class Model {
         Stream<Position> horizontalStream = horizontalStartingPositions();
 
         Set<List<Position>> matches = new HashSet<>();
-        ;
 
         matches.addAll(verticalStream
                 .filter(position -> candyBoard.getCellAt(position).getColor() != 99)
@@ -341,7 +340,7 @@ public class Model {
 
     public boolean findSolution(String currentInstruction) {
         // Base case
-        if (findPotentialCombinations()) {
+        if (!findPotentialCombinations()) {
             HashMap<Integer, String> solution = new HashMap<>();
             solution.put(userScore, currentInstruction);
             allSolutions.add(solution);
@@ -352,55 +351,83 @@ public class Model {
         for (int r = 1; r <= boardSize.rows(); r++) {
             for (int c = 1; c <= boardSize.cols(); c++) {
                 // Swap with the candy to the right and make sure it isnt a white one
-                if (c < boardSize.cols()) {
+                if (c < boardSize.cols() && candyBoard.getCellAt(new Position(r,c + 1,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c + 1, boardSize));
-                    updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c + "R"); // Indicate the move direction in the instruction
+                    // Ga enkel in recursie als er een match is ontstaan
+                    if (!findAllMatches().isEmpty()){
+                        updateBoard();
 
-                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                        findSolution(currentInstruction + r + "x" + c + " - to R - "); // Indicate the move direction in the instruction
+
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
+                    else{
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
                 }
 
                 // Swap with the candy to the left
-                if (c > 1) {
+                if (c > 1 && candyBoard.getCellAt(new Position(r,c - 1,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r, c - 1, boardSize));
-                    updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c + "L"); // Indicate the move direction in the instruction
+                    // Ga enkel in recursie als er een match is ontstaan
+                    if (!findAllMatches().isEmpty()){
+                        updateBoard();
 
-                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                        findSolution(currentInstruction + r + "x" + c + " - to L - "); // Indicate the move direction in the instruction
+
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
+                    else{
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
                 }
 
                 // Swap with the candy below
-                if (r < boardSize.rows()) {
+                if (r < boardSize.rows() && candyBoard.getCellAt(new Position(r + 1,c,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r + 1, c, boardSize));
-                    updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c + "D"); // Indicate the move direction in the instruction
+                    // Ga enkel in recursie als er een match is ontstaan HIER MAG DEI NIET IN BIJ DEBUG
+                    if (!findAllMatches().isEmpty()){
+                        updateBoard();
 
-                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                        findSolution(currentInstruction + r + "x" + c + " - to D - "); // Indicate the move direction in the instruction
+
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
+                    else{
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
                 }
 
                 // Swap with the candy above
-                if (r > 1) {
+                if (r > 1 && candyBoard.getCellAt(new Position(r - 1,c,boardSize)).getColor() != 99) {
                     Board<Candy> backtrackBoard = new Board<>(boardSize);
                     candyBoard.copyTo(backtrackBoard);
 
                     candyBoard.swapTwoPositions(new Position(r, c, boardSize), new Position(r - 1, c, boardSize));
-                    updateBoard();
 
-                    findSolution(currentInstruction + r + "x" + c + "U"); // Indicate the move direction in the instruction
+                    // Ga enkel in recursie als er een match is ontstaan
+                    if (!findAllMatches().isEmpty()){
+                        updateBoard();
 
-                    backtrackBoard.copyTo(candyBoard); // Backtrack
+                        findSolution(currentInstruction + r + "x" + c + " - to U - "); // Indicate the move direction in the instruction
+
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
+                    else{
+                        backtrackBoard.copyTo(candyBoard); // Backtrack
+                    }
                 }
             }
         }

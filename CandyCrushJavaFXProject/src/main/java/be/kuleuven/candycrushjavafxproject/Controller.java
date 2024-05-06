@@ -1,8 +1,6 @@
 package be.kuleuven.candycrushjavafxproject;
 
-import be.kuleuven.candycrushjavafxproject.Candies.Candy;
-import be.kuleuven.candycrushjavafxproject.Candies.normalCandy;
-import be.kuleuven.candycrushjavafxproject.Candies.rowDeleteCandy;
+import be.kuleuven.candycrushjavafxproject.Candies.*;
 import be.kuleuven.candycrushjavafxproject.GenericBoard.Board;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -215,8 +213,21 @@ public class Controller extends Application {
 
     private void GenerateGridNodes()
     {
-        Function<Position, Candy> cellCreator = position -> {
-            return model.GenerateRandomCandy();
+//        Function<Position, Candy> cellCreator = position -> {
+//            return model.GenerateRandomCandy();
+//        };
+
+        Function<Position, Candy> cellCreator = pos -> {
+            int index = pos.toIndex();
+            return switch (index) {
+                case 0 -> new normalCandy(1);
+                case 1, 3, 10, 14, 15 -> new normalCandy(3);
+                case 2, 5, 7, 8, 12 -> new normalCandy(0);
+                case 4, 6, 9 -> new normalCandy(2);
+                case 11 -> new doublePointsCandy(6);
+                case 13 -> new borderDeleteCandy(7);
+                default -> null; // Handle invalid indexes if needed
+            };
         };
 
         candyBoard.fill(cellCreator);
