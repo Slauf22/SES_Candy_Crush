@@ -21,7 +21,7 @@ public class Model {
     private final BoardSize boardSize;
     private final Board<Candy> candyBoard;
     // Voor maximizeScore
-    private final List<HashMap<Integer, String>> allSolutions = new ArrayList<>();
+    private final HashMap<Integer, String> allSolutions = new HashMap<>();
 
     ///////////////
     //Constructor//
@@ -341,9 +341,7 @@ public class Model {
     public boolean findSolution(String currentInstruction) {
         // Base case
         if (!findPotentialCombinations()) {
-            HashMap<Integer, String> solution = new HashMap<>();
-            solution.put(userScore, currentInstruction);
-            allSolutions.add(solution);
+            allSolutions.put(userScore,currentInstruction);
             return true;
         }
 
@@ -362,7 +360,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " - to R - "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Right "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -385,7 +383,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " - to L - "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Left "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -408,7 +406,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " - to D - "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Down "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -431,7 +429,7 @@ public class Model {
                     if (!findAllMatches().isEmpty()){
                         updateBoard();
 
-                        findSolution(currentInstruction + r + "x" + c + " - to U - "); // Indicate the move direction in the instruction
+                        findSolution(currentInstruction + r + "x" + c + " Up "); // Indicate the move direction in the instruction
 
                         backtrackBoard.copyTo(candyBoard); // Backtrack
                         userScore = scoreBackup;
@@ -458,6 +456,7 @@ public class Model {
                 if (c < boardSize.cols() && candyBoard.getCellAt(new Position(r,c + 1,boardSize)).getColor() != 99) {
                     candyBoard.swapTwoPositions(new Position(r,c,boardSize),new Position(r,c + 1,boardSize));
                     if (!findAllMatches().isEmpty()){
+                        backup.copyTo(candyBoard);
                         return true;
                     }
                     backup.copyTo(candyBoard);

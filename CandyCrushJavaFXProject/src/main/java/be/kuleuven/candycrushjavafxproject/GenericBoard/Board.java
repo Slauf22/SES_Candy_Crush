@@ -36,14 +36,13 @@ public class Board <T>{
         if (oldCell != null) {
             Set<Position> oldPositions = cellToPositionMap.get(oldCell);
 
-            if (oldPositions == null){
-                System.out.println(oldCell);
-            }
+            if (oldPositions != null) {
 
-            oldPositions.remove(position);
+                oldPositions.remove(position);
 
-            if (oldPositions.isEmpty()) {
-                cellToPositionMap.remove(oldCell);
+                if (oldPositions.isEmpty()) {
+                    cellToPositionMap.remove(oldCell);
+                }
             }
         }
 
