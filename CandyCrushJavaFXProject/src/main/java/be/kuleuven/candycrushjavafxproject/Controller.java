@@ -56,6 +56,7 @@ public class Controller extends Application {
 
     public Controller()
     {
+        // Boven een boardsize van 6x6 duurt het heel lang om de hoogste score te vinden met maximizeScore. Ik raad dus max 6x6 aan als je die feature wilt gebruiken.
         boardSize = new BoardSize(5,5);
         candyBoard = new Board<>(boardSize);
         candyBoardCopied = new Board<>(boardSize);
