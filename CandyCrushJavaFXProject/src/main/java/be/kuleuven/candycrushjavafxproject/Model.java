@@ -347,11 +347,11 @@ public class Model {
         System.out.println("Score " + maxKey + ": " + allSolutions.get(maxKey));
     }
 
-    public boolean findSolution(String currentInstruction) {
+    public void findSolution(String currentInstruction) {
         // Base case
         if (!findPotentialCombinations()) {
             allSolutions.put(userScore,currentInstruction);
-            return true;
+            return;
         }
 
         // Iterate through each cell on the board
@@ -405,7 +405,6 @@ public class Model {
                 }
             }
         }
-        return false; // Indicate no solution found from this state
     }
 
     // Returns true is there is at least 1 combination when a candy is moved correctly. Used for base case of maximize function
